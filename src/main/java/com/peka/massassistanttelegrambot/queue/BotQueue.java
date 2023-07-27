@@ -12,5 +12,5 @@ public interface BotQueue {
 
   void putUpdate(Update update);
 
-  Update getUpdate();
+  Update takeUpdate();
 }

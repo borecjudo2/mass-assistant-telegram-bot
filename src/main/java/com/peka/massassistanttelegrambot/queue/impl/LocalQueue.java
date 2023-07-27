@@ -33,7 +33,11 @@ public class LocalQueue implements BotQueue {
   }
 
   @Override
-  public Update getUpdate() {
-    return updateQueue.poll();
+  public Update takeUpdate() {
+    try {
+      return updateQueue.take();
+    } catch (InterruptedException exception) {
+      throw new RuntimeException(exception);
+    }
   }
 }
