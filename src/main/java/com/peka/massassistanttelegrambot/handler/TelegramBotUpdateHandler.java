@@ -1,6 +1,6 @@
 package com.peka.massassistanttelegrambot.handler;
 
-import com.peka.massassistanttelegrambot.controller.TelegramBotUpdateController;
+import com.peka.massassistanttelegrambot.queue.BotQueue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -15,9 +15,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @RequiredArgsConstructor
 public class TelegramBotUpdateHandler {
 
-  private final TelegramBotUpdateController controller;
+  private final BotQueue queue;
 
   public void handle(Update update) {
-    System.out.println(update);
+    queue.putUpdate(update);
   }
 }
