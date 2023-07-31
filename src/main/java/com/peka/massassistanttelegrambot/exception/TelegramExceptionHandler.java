@@ -26,7 +26,7 @@ public class TelegramExceptionHandler {
 
     SendMessage messageIsBlank = SendMessage.builder()
         .chatId(exception.getUpdate().getMessage().getChatId())
-        .text("Упс! Ты меня сломал! " + exception.getLocalizedMessage().split(":")[1])
+        .text("Упс! Ты меня сломал! " + exception.getLocalizedMessage())
         .build();
     bot.execute(messageIsBlank);
   }

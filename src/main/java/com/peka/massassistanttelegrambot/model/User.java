@@ -25,13 +25,30 @@ public class User {
 
   private int age;
 
-  private int weight;
+  private double weight;
 
-  private int targetWeight;
-
-  private int height;
+  private double height;
 
   private Sex sex;
 
   private double activity;
+
+  private CalculateType calculateType;
+
+  private LatestMessage latestMessage;
+
+  private String calculatedResult;
+
+  @Override
+  public String toString() {
+    String summary = """
+        Твой пол - %s
+        Твой возраст - %s
+        Твой вес - %s
+        Твой рост - %s
+        Твоя активность - %s
+        Твоя цель - %s
+        """;
+    return String.format(summary, sex.getValue(), age, weight, height, activity, calculateType.getData());
+  }
 }

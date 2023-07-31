@@ -11,15 +11,15 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 @Getter
-public enum ActivityRate {
+public enum MessageStep {
 
-  NONE(1.2),
-  LOWER(1.38),
-  MID_LOWER(1.46),
-  MID_UPPER(1.55),
-  HIGH_LOWER(1.64),
-  HIGH_UPPER(1.73),
-  HYPER(1.9);
-
-  private final double rate;
+  START,
+  CALCULATE_SEX,
+  CALCULATE_AGE,
+  CALCULATE_WEIGHT,
+  CALCULATE_HEIGHT,
+  CALCULATE_ACTIVITY,
+  CALCULATE_TYPE,
+  CALCULATE_SUMMARY,
+  CALCULATE_RESULT
 }

@@ -26,10 +26,23 @@ public class TelegramConfig {
     return new TelegramLongPollingBot(telegramProperties.getApiKey()) {
       @Override
       public void onUpdateReceived(Update update) {
-        log.info(String.format("Received update. ChatId=%s, MessageId=%s, UserName=%s.",
-            update.getMessage().getChatId(),
-            update.getMessage().getMessageId(),
-            update.getMessage().getChat().getUserName()));
+        String chatId = "";
+        String messageId = "";
+        String username = "";
+
+        if (update.hasMessage()) {
+          chatId = String.valueOf(update.getMessage().getChatId());
+          messageId = String.valueOf(update.getMessage().getMessageId());
+          username = update.getMessage().getChat().getUserName();
+        }
+
+        if (update.hasCallbackQuery()) {
+          chatId = String.valueOf(update.getCallbackQuery().getMessage().getChatId());
+          messageId = String.valueOf(update.getCallbackQuery().getMessage().getMessageId());
+          username = update.getCallbackQuery().getMessage().getChat().getUserName();
+        }
+
+        log.info(String.format("Received update. ChatId=%s, MessageId=%s, UserName=%s.", chatId, messageId, username));
 
         telegramBotUpdateHandler.handle(update);
       }

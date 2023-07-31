@@ -11,15 +11,10 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 @Getter
-public enum ActivityRate {
+public enum CallbackMessages {
 
-  NONE(1.2),
-  LOWER(1.38),
-  MID_LOWER(1.46),
-  MID_UPPER(1.55),
-  HIGH_LOWER(1.64),
-  HIGH_UPPER(1.73),
-  HYPER(1.9);
+  CALCULATE("Подсчитать калории и БЖУ"),
+  CALCULATE_AGAIN("Подсчитать с новыми данными");
 
-  private final double rate;
+  private final String data;
 }

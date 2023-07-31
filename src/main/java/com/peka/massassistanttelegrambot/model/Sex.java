@@ -15,8 +15,8 @@ import java.util.Arrays;
 @Getter
 public enum Sex {
 
-  MAN("М", 5),
-  WOMAN("Ж", -161);
+  MAN("Мужчина", 5),
+  WOMAN("Женщина", -161);
 
   private final String value;
   private final int data;

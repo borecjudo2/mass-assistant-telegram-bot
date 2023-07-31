@@ -19,4 +19,9 @@ public class TelegramException extends RuntimeException {
     super(exception);
     this.update = update;
   }
+
+  public TelegramException(String message, Update update) {
+    super(message);
+    this.update = update;
+  }
 }

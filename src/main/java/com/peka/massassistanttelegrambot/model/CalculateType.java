@@ -11,15 +11,12 @@ import lombok.RequiredArgsConstructor;
  */
 @RequiredArgsConstructor
 @Getter
-public enum ActivityRate {
+public enum CalculateType {
 
-  NONE(1.2),
-  LOWER(1.38),
-  MID_LOWER(1.46),
-  MID_UPPER(1.55),
-  HIGH_LOWER(1.64),
-  HIGH_UPPER(1.73),
-  HYPER(1.9);
+  DEFICIT("Дефицит", 0.85),
+  NORMAL("Поддержание", 1),
+  PROFIT("Профицит", 1.15);
 
-  private final double rate;
+  private final String data;
+  private final double value;
 }
