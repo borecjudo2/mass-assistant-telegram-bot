@@ -37,7 +37,7 @@ public class LocalQueue implements BotQueue {
     try {
       return updateQueue.take();
     } catch (InterruptedException exception) {
-      throw new RuntimeException(exception);
+      throw new RuntimeException("Exception when receiving an update from the queue", exception);
     }
   }
 }

@@ -1,10 +1,11 @@
 package com.peka.massassistanttelegrambot.controller;
 
-import com.peka.massassistanttelegrambot.exception.TelegramExceptionHandler;
 import com.peka.massassistanttelegrambot.exception.TelegramException;
+import com.peka.massassistanttelegrambot.exception.TelegramExceptionHandler;
 import com.peka.massassistanttelegrambot.queue.BotQueue;
 import com.peka.massassistanttelegrambot.service.BotService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,6 +20,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
  */
 @EnableAsync
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class TelegramBotUpdateController {
 
@@ -34,6 +36,8 @@ public class TelegramBotUpdateController {
       service.processUpdate(update);
     } catch (TelegramException exception) {
       exceptionHandler.handle(exception);
+    } catch (Exception exception) {
+      log.error(exception.getLocalizedMessage(), exception);
     }
   }
 }

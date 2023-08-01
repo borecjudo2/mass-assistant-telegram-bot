@@ -15,13 +15,9 @@ import java.util.UUID;
 @Builder
 public class User {
 
-  private UUID id;
+  private long id;
 
   private String username;
-
-  private String firstName;
-
-  private String lastName;
 
   private int age;
 
@@ -65,5 +61,4 @@ public class User {
         calculateType.getData()
     );
   }
-
 }

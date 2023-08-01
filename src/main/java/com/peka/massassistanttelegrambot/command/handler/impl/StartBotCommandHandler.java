@@ -45,6 +45,7 @@ public class StartBotCommandHandler extends BotCommandHandler {
 
     if (user == null) {
       return User.builder()
+          .id(update.getMessage().getChatId())
           .username(update.getMessage().getChat().getUserName())
           .latestMessage(latestMessage)
           .build();

@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * DESCRIPTION
@@ -20,7 +20,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class LocalUserRepository implements UserRepository {
 
-  private final Map<String, User> db = new HashMap<>();
+  private final Map<String, User> db = new ConcurrentHashMap<>();
 
   @Override
   public User saveUser(User user) {
@@ -28,13 +28,14 @@ public class LocalUserRepository implements UserRepository {
       return null;
     }
 
-    db.put(user.getUsername(), user);
-    log.info("User saved! " + user.getUsername());
+    db.put(String.valueOf(user.getId()), user);
+
+    log.info(String.format("User saved! ChatID=%s Username=%s", user.getId(), user.getUsername()));
     return user;
   }
 
   @Override
-  public User getUserByUsername(String username) {
-    return db.get(username);
+  public User getUserByUsername(long id) {
+    return db.get(String.valueOf(id));
   }
 }

@@ -34,8 +34,8 @@ public class BotServiceImpl implements BotService {
   @Override
   public void processUpdate(Update update) {
     User existingUser = update.hasMessage() ?
-        userRepository.getUserByUsername(update.getMessage().getChat().getUserName()) :
-        userRepository.getUserByUsername(update.getCallbackQuery().getMessage().getChat().getUserName());
+        userRepository.getUserByUsername(update.getMessage().getChatId()) :
+        userRepository.getUserByUsername(update.getCallbackQuery().getMessage().getChatId());
 
     botCommandHandlers.stream()
         .filter(botCommandHandler -> botCommandHandler.isMyCommand(update))

@@ -12,5 +12,5 @@ public interface UserRepository {
 
   User saveUser(User user);
 
-  User getUserByUsername(String username);
+  User getUserByUsername(long id);
 }
