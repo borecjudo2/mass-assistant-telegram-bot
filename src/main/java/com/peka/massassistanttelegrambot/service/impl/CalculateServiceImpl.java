@@ -1,5 +1,6 @@
 package com.peka.massassistanttelegrambot.service.impl;
 
+import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.service.CalculateService;
 import org.springframework.stereotype.Service;
@@ -26,15 +27,25 @@ public class CalculateServiceImpl implements CalculateService {
     double carbohydrates = (activityCalories - proteins * 4.2 - fats * 9.29) / 4.2;
 
     String message = """
-        Тебе нужно %.1f к.
+        Тебе нужно %.1f к. %s
                 
         Из них:
-        
-        Белки - %.1f гр.
-        Жиры - %.1f гр.
-        Углеводы - %.1f гр.
+                
+        %s Белки - %.1f гр.
+        %s Жиры - %.1f гр.
+        %s Углеводы - %.1f гр.
         """;
 
-    return String.format(message, activityCalories, proteins, fats, carbohydrates);
+    return String.format(
+        message,
+        activityCalories,
+        Emoji.FORK.getEmoji(),
+        Emoji.MEAT.getEmoji(),
+        proteins,
+        Emoji.NUT.getEmoji(),
+        fats,
+        Emoji.RAMEN.getEmoji(),
+        carbohydrates
+    );
   }
 }

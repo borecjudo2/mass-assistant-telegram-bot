@@ -13,8 +13,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum CallbackMessages {
 
-  CALCULATE("Подсчитать калории и БЖУ"),
-  CALCULATE_AGAIN("Подсчитать с новыми данными");
+  CALCULATE("Подсчитать калории и БЖУ " + Emoji.DATA.getEmoji() + Emoji.SPAGHETTI.getEmoji()),
+  CALCULATE_AGAIN("Подсчитать с новыми данными " + Emoji.DATA.getEmoji() + Emoji.SPAGHETTI.getEmoji());
 
   private final String data;
 }

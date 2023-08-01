@@ -4,6 +4,7 @@ import com.peka.massassistanttelegrambot.exception.TelegramException;
 import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.ActivityRate;
+import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
 import lombok.RequiredArgsConstructor;
@@ -75,44 +76,53 @@ public class CalculateHeightBotMessageHandler extends BotMessageHandler {
   protected SendMessage createNextMessage(Update update, User user) {
     return SendMessage.builder()
         .chatId(update.getMessage().getChatId())
-        .text(BotMessagesUtils.CALCULATE_ACTIVITY_MESSAGE)
+        .text(String.format(
+            BotMessagesUtils.CALCULATE_ACTIVITY_MESSAGE,
+            Emoji.NONE_ACTIVITY.getEmoji(),
+            Emoji.LOW.getEmoji(),
+            Emoji.MID_LOW.getEmoji(),
+            Emoji.MID_UP.getEmoji(),
+            Emoji.UP_LOW.getEmoji(),
+            Emoji.UP_UP.getEmoji(),
+            Emoji.HYPER.getEmoji()
+        ))
         .replyMarkup(createInlineKeyboardMarkup())
         .build();
   }
 
   private InlineKeyboardMarkup createInlineKeyboardMarkup() {
     InlineKeyboardButton noneButton = InlineKeyboardButton.builder()
-        .text(String.valueOf(ActivityRate.NONE.getRate()))
+        .text(String.valueOf(ActivityRate.NONE.getText()))
         .callbackData(ActivityRate.NONE.toString())
         .build();
 
     InlineKeyboardButton lowerButton = InlineKeyboardButton.builder()
-        .text(String.valueOf(ActivityRate.LOWER.getRate()))
+        .text(String.valueOf(ActivityRate.LOWER.getText()))
         .callbackData(ActivityRate.LOWER.toString())
         .build();
 
     InlineKeyboardButton midLowerButton = InlineKeyboardButton.builder()
-        .text(String.valueOf(ActivityRate.MID_LOWER.getRate()))
+        .text(String.valueOf(ActivityRate.MID_LOWER.getText()))
         .callbackData(ActivityRate.MID_LOWER.toString())
         .build();
 
     InlineKeyboardButton midUpperButton = InlineKeyboardButton.builder()
-        .text(String.valueOf(ActivityRate.MID_UPPER.getRate()))
+        .text(String.valueOf(ActivityRate.MID_UPPER.getText()))
         .callbackData(ActivityRate.MID_UPPER.toString())
         .build();
 
     InlineKeyboardButton highLowerButton = InlineKeyboardButton.builder()
-        .text(String.valueOf(ActivityRate.HIGH_LOWER.getRate()))
+        .text(String.valueOf(ActivityRate.HIGH_LOWER.getText()))
         .callbackData(ActivityRate.HIGH_LOWER.toString())
         .build();
 
     InlineKeyboardButton highUpperButton = InlineKeyboardButton.builder()
-        .text(String.valueOf(ActivityRate.HIGH_UPPER.getRate()))
+        .text(String.valueOf(ActivityRate.HIGH_UPPER.getText()))
         .callbackData(ActivityRate.HIGH_UPPER.toString())
         .build();
 
     InlineKeyboardButton hyperButton = InlineKeyboardButton.builder()
-        .text(String.valueOf(ActivityRate.HYPER.getRate()))
+        .text(String.valueOf(ActivityRate.HYPER.getText()))
         .callbackData(ActivityRate.HYPER.toString())
         .build();
 

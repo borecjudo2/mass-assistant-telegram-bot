@@ -13,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum CalculateType {
 
-  DEFICIT("Дефицит", 0.85),
-  NORMAL("Поддержание", 1),
-  PROFIT("Профицит", 1.15);
+  DEFICIT("Дефицит\n" + Emoji.CALC_DOWN.getEmoji(), 0.85),
+  NORMAL("Поддержание\n" + Emoji.CALC_NORMAL.getEmoji(), 1),
+  PROFIT("Профицит\n" + Emoji.CALC_UP.getEmoji(), 1.15);
 
   private final String data;
   private final double value;

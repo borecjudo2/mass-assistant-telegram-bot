@@ -3,6 +3,7 @@ package com.peka.massassistanttelegrambot.command.handler.impl;
 import com.peka.massassistanttelegrambot.command.BotCommandsUtils;
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
 import com.peka.massassistanttelegrambot.model.CallbackMessages;
+import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.LatestMessage;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.Sex;
@@ -54,7 +55,11 @@ public class CalculateBotCommandHandler extends BotCommandHandler {
     if (user.getCalculatedResult() == null) {
       return SendMessage.builder()
           .chatId(update.getMessage().getChatId())
-          .text(BotCommandsUtils.CALCULATE_COMMAND_TEXT)
+          .text(String.format(
+              BotCommandsUtils.CALCULATE_COMMAND_TEXT,
+              Emoji.MAN_MAGE.getEmoji(),
+              Emoji.WOMAN_MAGE.getEmoji()
+          ))
           .replyMarkup(createInlineKeyboardMarkup())
           .build();
     }

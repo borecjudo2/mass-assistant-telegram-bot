@@ -2,6 +2,7 @@ package com.peka.massassistanttelegrambot.command.handler.impl;
 
 import com.peka.massassistanttelegrambot.command.BotCommandsUtils;
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
+import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.LatestMessage;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
@@ -58,7 +59,14 @@ public class StartBotCommandHandler extends BotCommandHandler {
   protected SendMessage createMessage(Update update, User user) {
     return SendMessage.builder()
         .chatId(update.getMessage().getChatId())
-        .text(String.format(BotCommandsUtils.START_COMMAND_TEXT, update.getMessage().getChat().getUserName()))
+        .text(
+            String.format(
+                BotCommandsUtils.START_COMMAND_TEXT,
+                update.getMessage().getChat().getUserName(),
+                Emoji.WAVE.getEmoji(),
+                Emoji.SPAGHETTI.getEmoji()
+            )
+        )
         .replyMarkup(createReplyKeyboardMarkup())
         .build();
   }

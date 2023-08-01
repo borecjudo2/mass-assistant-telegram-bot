@@ -21,6 +21,7 @@
     <testcontainers.scope>test</testcontainers.scope>
 
     <telegrambots.version>6.7.0</telegrambots.version>
+    <emoji.version>5.1.1</emoji.version>
   </properties>
 
   <dependencyManagement>
@@ -30,6 +31,11 @@
         <artifactId>telegrambots</artifactId>
         <version>${telegrambots.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.vdurmont</groupId>
+        <artifactId>emoji-java</artifactId>
+        <version>${emoji.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -37,6 +43,10 @@
     <dependency>
       <groupId>org.telegram</groupId>
       <artifactId>telegrambots</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.vdurmont</groupId>
+      <artifactId>emoji-java</artifactId>
     </dependency>
 
     <!-- Spring Boot -->

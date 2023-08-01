@@ -42,13 +42,28 @@ public class User {
   @Override
   public String toString() {
     String summary = """
-        Твой пол - %s
-        Твой возраст - %s
-        Твой вес - %s
-        Твой рост - %s
-        Твоя активность - %s
-        Твоя цель - %s
+        %s Твой пол - %s
+        %s Твой возраст - %s
+        %s Твой вес - %s
+        %s Твой рост - %s
+        %s Твоя активность - %s
+        %s Твоя цель - %s
         """;
-    return String.format(summary, sex.getValue(), age, weight, height, activity, calculateType.getData());
+    return String.format(
+        summary,
+        Emoji.MAN_MAGE.getEmoji() + Emoji.WOMAN_MAGE.getEmoji(),
+        sex.getValue(),
+        Emoji.UNDERAGE.getEmoji(),
+        age,
+        Emoji.SCALES.getEmoji(),
+        weight,
+        Emoji.RULER.getEmoji(),
+        height,
+        Emoji.NONE_ACTIVITY.getEmoji(),
+        activity,
+        Emoji.TROPHY.getEmoji(),
+        calculateType.getData()
+    );
   }
+
 }

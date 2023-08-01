@@ -2,6 +2,7 @@ package com.peka.massassistanttelegrambot.message.handler.impl;
 
 import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
+import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.Sex;
 import com.peka.massassistanttelegrambot.model.User;
@@ -49,7 +50,11 @@ public class CalculateAgainBotMessageHandler extends BotMessageHandler {
   protected SendMessage createNextMessage(Update update, User user) {
     return SendMessage.builder()
         .chatId(update.getCallbackQuery().getMessage().getChatId())
-        .text(BotMessagesUtils.CALCULATE_SEX_MESSAGE)
+        .text(String.format(
+            BotMessagesUtils.CALCULATE_SEX_MESSAGE,
+            Emoji.MAN_MAGE.getEmoji(),
+            Emoji.WOMAN_MAGE.getEmoji()
+        ))
         .replyMarkup(createInlineKeyboardMarkup())
         .build();
   }

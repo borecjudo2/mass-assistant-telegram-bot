@@ -5,6 +5,7 @@ import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.ActivityRate;
 import com.peka.massassistanttelegrambot.model.CalculateType;
+import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +60,10 @@ public class CalculateActivityBotMessageHandler extends BotMessageHandler {
 
     return SendMessage.builder()
         .chatId(update.getCallbackQuery().getMessage().getChatId())
-        .text(BotMessagesUtils.CALCULATE_TYPE_MESSAGE)
+        .text(String.format(
+            BotMessagesUtils.CALCULATE_TYPE_MESSAGE,
+            Emoji.TROPHY.getEmoji()
+        ))
         .replyMarkup(createInlineKeyboardMarkup())
         .build();
   }
