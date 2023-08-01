@@ -1,20 +1,11 @@
 package com.peka.massassistanttelegrambot.command.handler.impl;
 
-import com.peka.massassistanttelegrambot.command.BotCommandsUtils;
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
-import com.peka.massassistanttelegrambot.model.LatestMessage;
-import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * DESCRIPTION
@@ -25,6 +16,7 @@ import java.util.Collections;
 @Service
 @RequiredArgsConstructor
 public class HelpBotCommandHandler extends BotCommandHandler {
+
   private static final String HELP = "/help";
 
   @Override
@@ -39,10 +31,17 @@ public class HelpBotCommandHandler extends BotCommandHandler {
 
   @Override
   protected SendMessage createMessage(Update update, User user) {
-    // TODO: 7/31/2023 impl help flow
     return SendMessage.builder()
         .chatId(update.getMessage().getChatId())
-        .text("Когда-то здесь что-то будет!)")
+        .text("Я считаю калории по этой [формуле](https://clck.ru/35AVgL), если выбран дефицит, то от этого значения " +
+            "минус 15%, если поддержка, то так и остается и если профицит, то плюс 15%.\n\n" +
+            "БЖУ считаются так:\n" +
+            "Белки - вес * 1.5\n" +
+            "Жиры - вес * 1\n" +
+            "Углеводы - все калории минус калории от белков и жиров\n\n" +
+            "Какие-нибудь вопросы? Пиши моему папе - @borecjudo"
+        )
+        .parseMode("Markdown")
         .build();
   }
 }

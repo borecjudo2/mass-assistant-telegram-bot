@@ -27,7 +27,11 @@ public abstract class BotMessageHandler {
   @Getter
   private TelegramLongPollingBot bot;
 
-  public boolean isMyMessage(User user) {
+  public boolean isMyMessage(User user, Update update) {
+    if (user == null) {
+      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update);
+    }
+
     return getMessageStep().equals(user.getLatestMessage().getMessageStep());
   }
 

@@ -24,8 +24,12 @@ public class TelegramExceptionHandler {
   public void handle(TelegramException exception) {
     log.error(exception.getLocalizedMessage(), exception);
 
+    long chatId = exception.getUpdate().hasMessage() ?
+        exception.getUpdate().getMessage().getChatId() :
+        exception.getUpdate().getCallbackQuery().getMessage().getChatId();
+
     SendMessage messageIsBlank = SendMessage.builder()
-        .chatId(exception.getUpdate().getMessage().getChatId())
+        .chatId(chatId)
         .text("Упс! Ты меня сломал! " + exception.getLocalizedMessage())
         .build();
     bot.execute(messageIsBlank);

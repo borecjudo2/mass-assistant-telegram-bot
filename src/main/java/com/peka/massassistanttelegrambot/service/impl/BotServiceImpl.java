@@ -46,7 +46,7 @@ public class BotServiceImpl implements BotService {
 
   private Runnable handleMessages(User existingUser, Update update) {
     return () -> botMessageHandlers.stream()
-        .filter(botMessageHandler -> botMessageHandler.isMyMessage(existingUser))
+        .filter(botMessageHandler -> botMessageHandler.isMyMessage(existingUser, update))
         .findFirst()
         .ifPresentOrElse(botMessageHandler -> userRepository
             .saveUser(botMessageHandler.handle(update, existingUser)), handleOtherMessages(update));

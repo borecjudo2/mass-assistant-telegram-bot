@@ -2,6 +2,7 @@ package com.peka.massassistanttelegrambot.command.handler.impl;
 
 import com.peka.massassistanttelegrambot.command.BotCommandsUtils;
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
+import com.peka.massassistanttelegrambot.exception.TelegramException;
 import com.peka.massassistanttelegrambot.model.CallbackMessages;
 import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.LatestMessage;
@@ -37,6 +38,10 @@ public class CalculateBotCommandHandler extends BotCommandHandler {
 
   @Override
   protected User fillUserData(Update update, User user) {
+    if (user == null) {
+      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update);
+    }
+
     MessageStep messageStep = user.getCalculatedResult() == null ? MessageStep.CALCULATE_SEX :
         MessageStep.CALCULATE_RESULT;
 
