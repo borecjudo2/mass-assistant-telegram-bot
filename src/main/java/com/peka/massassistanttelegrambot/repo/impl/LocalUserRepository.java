@@ -24,6 +24,10 @@ public class LocalUserRepository implements UserRepository {
 
   @Override
   public User saveUser(User user) {
+    if (user == null) {
+      return null;
+    }
+
     db.put(user.getUsername(), user);
     log.info("User saved! " + user.getUsername());
     return user;

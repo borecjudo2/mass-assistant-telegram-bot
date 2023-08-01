@@ -32,7 +32,9 @@ public abstract class BotCommandHandler {
       SendMessage messageToSend = createMessage(update, user);
       Message executedMessage = bot.execute(messageToSend);
 
-      user.getLatestMessage().setMessageId(executedMessage.getMessageId());
+      if (user != null && user.getLatestMessage() != null) {
+        user.getLatestMessage().setMessageId(executedMessage.getMessageId());
+      }
 
       return user;
     } catch (TelegramApiException exception) {
