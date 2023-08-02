@@ -8,5 +8,5 @@ package com.peka.massassistanttelegrambot.service;
  */
 public interface InitService {
 
-  void init();
+  void asyncGoogleAppCall();
 }
