@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
  * @author Vladislav_Karpeka
  * @version 1.0.0
  */
-@Service
+//@Service
 public class InitServiceImpl implements InitService {
 
   private final String url;
@@ -21,7 +21,7 @@ public class InitServiceImpl implements InitService {
     this.url = url;
   }
 
-  @PostConstruct
+//  @PostConstruct
   @Override
   public void init() {
     new RestTemplate().getForEntity(url, String.class);
