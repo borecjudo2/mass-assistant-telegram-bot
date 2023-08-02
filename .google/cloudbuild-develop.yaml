@@ -1,0 +1,40 @@
+#-----------------------------------------
+# CloudBuild Pipeline for Develop CloudRun
+#-----------------------------------------
+steps:
+  # Docker Build Image
+  - name: gcr.io/cloud-builders/docker
+    id: BUILD
+    args: [ 'build', '-t', '$_SERVICE_IMAGE',
+            '--build-arg', 'SPRING_PROFILES_ACTIVE=${_SPRING_PROFILES_ACTIVE}',
+            '--build-arg', 'TELEGRAM_BOT_APIKEY=${_TELEGRAM_BOT_APIKEY}',
+            '--build-arg', 'TELEGRAM_BOT_NAME=${_TELEGRAM_BOT_NAME}',
+            '.', '-f', 'Dockerfile' ]
+
+  # Docker Push Image to Artifact Registry
+  - name: gcr.io/cloud-builders/docker
+    id: PUSH
+    args: [ 'push', '$_SERVICE_IMAGE' ]
+
+  # Docker Deploy image to Cloud Run
+  - name: gcr.io/cloud-builders/gcloud
+    id: DEPLOY
+    args:
+      - run
+      - services
+      - update
+      - $_SERVICE_NAME
+      - --project=$_SERVICE_PROJECT
+      - --region=$_SERVICE_REGION
+      - --image=$_SERVICE_IMAGE
+
+images: # Display the image in the build results - Build Artifacts
+  - $_SERVICE_IMAGE
+
+substitutions:
+  _SERVICE_IMAGE: northamerica-northeast1-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_REGISTRY}/${_DOCKER_IMAGENAME}:${SHORT_SHA}
+  _SERVICE_REGION: northamerica-northeast1
+  _SERVICE_PROJECT: mass-tg-bot-develop
+  _SERVICE_NAME: mass-tg-bot-app-develop
+  _DOCKER_REGISTRY: mass-tg-bot-docker-repo
+  _DOCKER_IMAGENAME: mass-tg-bot-develop-docker-image
