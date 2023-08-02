@@ -7,7 +7,6 @@ import com.peka.massassistanttelegrambot.service.BotService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -18,7 +17,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
  * @author Vladislav_Karpeka
  * @version 1.0.0
  */
-@EnableAsync
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -28,8 +26,8 @@ public class TelegramBotUpdateController {
   private final BotService service;
   private final TelegramExceptionHandler exceptionHandler;
 
-  @Async
-  @Scheduled(fixedRate = 1000)
+  @Async("threadPoolTaskExecutor")
+  @Scheduled(fixedRate = 100)
   public void processUpdate() {
     try {
       Update update = queue.takeUpdate();
