@@ -7,6 +7,7 @@ steps:
     id: BUILD
     args: [ 'build', '-t', '$_SERVICE_IMAGE',
             '--build-arg', 'SPRING_PROFILES_ACTIVE=${_SPRING_PROFILES_ACTIVE}',
+            '--build-arg', 'GOOGLE_APP_URL=${_GOOGLE_APP_URL}',
             '--build-arg', 'TELEGRAM_BOT_APIKEY=${_TELEGRAM_BOT_APIKEY}',
             '--build-arg', 'TELEGRAM_BOT_NAME=${_TELEGRAM_BOT_NAME}',
             '.', '-f', 'Dockerfile' ]
