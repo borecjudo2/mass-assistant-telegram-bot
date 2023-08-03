@@ -7,6 +7,7 @@ import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;
 import com.peka.massassistanttelegrambot.service.BotService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -22,6 +23,7 @@ import java.util.List;
  * @version 1.0.0
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class BotServiceImpl implements BotService {
 
@@ -40,7 +42,7 @@ public class BotServiceImpl implements BotService {
     botCommandHandlers.stream()
         .filter(botCommandHandler -> botCommandHandler.isMyCommand(update))
         .findFirst()
-        .ifPresentOrElse(botCommandHandler -> userRepository.save(botCommandHandler.handle(update, existingUser)),
+        .ifPresentOrElse(botCommandHandler -> saveUser(botCommandHandler.handle(update, existingUser)),
             handleMessages(existingUser, update));
   }
 
@@ -48,8 +50,8 @@ public class BotServiceImpl implements BotService {
     return () -> botMessageHandlers.stream()
         .filter(botMessageHandler -> botMessageHandler.isMyMessage(existingUser, update))
         .findFirst()
-        .ifPresentOrElse(botMessageHandler -> userRepository
-            .save(botMessageHandler.handle(update, existingUser)), handleOtherMessages(update));
+        .ifPresentOrElse(botMessageHandler ->
+            saveUser(botMessageHandler.handle(update, existingUser)), handleOtherMessages(update));
   }
 
   private Runnable handleOtherMessages(Update update) {
@@ -64,5 +66,10 @@ public class BotServiceImpl implements BotService {
         throw new TelegramException(update, exception);
       }
     };
+  }
+
+  private void saveUser(User user) {
+    userRepository.save(user);
+    log.info(String.format("User saved! ChatID=%s Username=%s", user.getId(), user.getUsername()));
   }
 }
