@@ -10,6 +10,8 @@ steps:
             '--build-arg', 'GOOGLE_APP_URL=${_GOOGLE_APP_URL}',
             '--build-arg', 'TELEGRAM_BOT_APIKEY=${_TELEGRAM_BOT_APIKEY}',
             '--build-arg', 'TELEGRAM_BOT_NAME=${_TELEGRAM_BOT_NAME}',
+            '--build-arg', 'SPRING_DATA_MONGODB_DATABASE=${_SPRING_DATA_MONGODB_DATABASE}',
+            '--build-arg', 'SPRING_DATA_MONGODB_URI=${_SPRING_DATA_MONGODB_URI}',
             '.', '-f', 'Dockerfile' ]
 
   # Docker Push Image to Artifact Registry
