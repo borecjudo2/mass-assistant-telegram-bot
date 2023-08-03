@@ -1,6 +1,7 @@
 package com.peka.massassistanttelegrambot.repo;
 
 import com.peka.massassistanttelegrambot.model.User;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  * DESCRIPTION
@@ -8,9 +9,6 @@ import com.peka.massassistanttelegrambot.model.User;
  * @author Vladislav_Karpeka
  * @version 1.0.0
  */
-public interface UserRepository {
+public interface MongodbUserRepository extends MongoRepository<User, Long> {
 
-  User saveUser(User user);
-
-  User getUserByUsername(long id);
 }

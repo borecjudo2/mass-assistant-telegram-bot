@@ -70,29 +70,15 @@
       <artifactId>spring-boot-testcontainers</artifactId>
       <scope>test</scope>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.boot</groupId>-->
-<!--      <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-    <!--      <groupId>org.flywaydb</groupId>-->
-    <!--      <artifactId>flyway-core</artifactId>-->
-    <!--    </dependency>-->
-    <!--    <dependency>-->
-    <!--      <groupId>org.postgresql</groupId>-->
-    <!--      <artifactId>postgresql</artifactId>-->
-    <!--      <scope>runtime</scope>-->
-    <!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>org.testcontainers</groupId>-->
-<!--      <artifactId>testcontainers</artifactId>-->
-<!--      <scope>${testcontainers.scope}</scope>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>org.testcontainers</groupId>-->
-<!--      <artifactId>postgresql</artifactId>-->
-<!--      <scope>${testcontainers.scope}</scope>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>mongodb</artifactId>
+      <scope>${testcontainers.scope}</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -118,7 +104,7 @@
       <!-- This allows to connect to the database provided by testcontainers when application is started. -->
       <id>local</id>
       <properties>
-        <testcontainers.scope>runtime</testcontainers.scope>
+        <testcontainers.scope>compile</testcontainers.scope>
       </properties>
     </profile>
   </profiles>

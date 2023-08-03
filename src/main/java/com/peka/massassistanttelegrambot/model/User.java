@@ -2,8 +2,8 @@ package com.peka.massassistanttelegrambot.model;
 
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.UUID;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * DESCRIPTION
@@ -11,11 +11,13 @@ import java.util.UUID;
  * @author Vladislav Karpeka
  * @version 1.0.0
  */
+@Document("users")
 @Data
 @Builder
 public class User {
 
-  private long id;
+  @Id
+  private Long id;
 
   private String username;
 

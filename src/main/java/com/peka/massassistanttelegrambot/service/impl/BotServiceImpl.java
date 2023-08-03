@@ -4,7 +4,7 @@ import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
 import com.peka.massassistanttelegrambot.exception.TelegramException;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.User;
-import com.peka.massassistanttelegrambot.repo.UserRepository;
+import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;
 import com.peka.massassistanttelegrambot.service.BotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,20 +27,20 @@ public class BotServiceImpl implements BotService {
 
   private final TelegramLongPollingBot bot;
 
-  private final UserRepository userRepository;
+  private final MongodbUserRepository userRepository;
   private final List<BotCommandHandler> botCommandHandlers;
   private final List<BotMessageHandler> botMessageHandlers;
 
   @Override
   public void processUpdate(Update update) {
     User existingUser = update.hasMessage() ?
-        userRepository.getUserByUsername(update.getMessage().getChatId()) :
-        userRepository.getUserByUsername(update.getCallbackQuery().getMessage().getChatId());
+        userRepository.findById(update.getMessage().getChatId()).orElse(null) :
+        userRepository.findById(update.getCallbackQuery().getMessage().getChatId()).orElse(null);
 
     botCommandHandlers.stream()
         .filter(botCommandHandler -> botCommandHandler.isMyCommand(update))
         .findFirst()
-        .ifPresentOrElse(botCommandHandler -> userRepository.saveUser(botCommandHandler.handle(update, existingUser)),
+        .ifPresentOrElse(botCommandHandler -> userRepository.save(botCommandHandler.handle(update, existingUser)),
             handleMessages(existingUser, update));
   }
 
@@ -49,7 +49,7 @@ public class BotServiceImpl implements BotService {
         .filter(botMessageHandler -> botMessageHandler.isMyMessage(existingUser, update))
         .findFirst()
         .ifPresentOrElse(botMessageHandler -> userRepository
-            .saveUser(botMessageHandler.handle(update, existingUser)), handleOtherMessages(update));
+            .save(botMessageHandler.handle(update, existingUser)), handleOtherMessages(update));
   }
 
   private Runnable handleOtherMessages(Update update) {
