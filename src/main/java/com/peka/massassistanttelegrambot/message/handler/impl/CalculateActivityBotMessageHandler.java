@@ -85,7 +85,11 @@ public class CalculateActivityBotMessageHandler extends BotMessageHandler {
         .build();
 
     return InlineKeyboardMarkup.builder()
-        .keyboard(Collections.singletonList(Arrays.asList(deficitButton, normalButton, profitButton)))
+        .keyboard(Arrays.asList(
+            Collections.singletonList(deficitButton),
+            Collections.singletonList(normalButton),
+            Collections.singletonList(profitButton))
+        )
         .build();
   }
 }
