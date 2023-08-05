@@ -11,6 +11,10 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class BotMessagesUtils {
 
+  public String CONFIG_PROTEINS_MESSAGE = """
+      Новое значение белка на кг массы тела установленно! %s %s
+      """;
+
   public String CALCULATE_SEX_MESSAGE = """
       Выбери свой пол! %s %s
       """;

@@ -31,11 +31,13 @@ public class User {
 
   private double activity;
 
+  private double proteinsValue;
+
   private CalculateType calculateType;
 
   private LatestMessage latestMessage;
 
-  private String calculatedResult;
+  private CalculateResult calculatedResult;
 
   @Override
   public String toString() {

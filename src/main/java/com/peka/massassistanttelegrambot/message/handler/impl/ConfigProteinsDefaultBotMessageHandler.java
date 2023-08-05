@@ -1,18 +1,15 @@
 package com.peka.massassistanttelegrambot.message.handler.impl;
 
+import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.CallbackMessages;
+import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
-import com.peka.massassistanttelegrambot.service.CalculateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-
-import java.util.Collections;
 
 /**
  * DESCRIPTION
@@ -22,9 +19,7 @@ import java.util.Collections;
  */
 @Service
 @RequiredArgsConstructor
-public class CalculateSummaryBotMessageHandler extends BotMessageHandler {
-
-  private final CalculateService calculateService;
+public class ConfigProteinsDefaultBotMessageHandler extends BotMessageHandler {
 
   @Override
   protected boolean isNeededMessageType(Update update) {
@@ -33,17 +28,18 @@ public class CalculateSummaryBotMessageHandler extends BotMessageHandler {
 
   @Override
   protected MessageStep getMessageStep() {
-    return MessageStep.CALCULATE_SUMMARY;
+    return MessageStep.CONFIG_PROTEINS;
   }
 
   @Override
   protected MessageStep getNextMessageStep() {
-    return MessageStep.CALCULATE_RESULT;
+    return MessageStep.CONFIG_PROTEINS;
   }
 
   @Override
   protected User fillUserData(Update update, User user) {
-    user.setCalculatedResult(calculateService.calculate(user));
+    CallbackMessages proteinsValue = CallbackMessages.valueOf(update.getCallbackQuery().getData());
+    user.setProteinsValue(Double.parseDouble(proteinsValue.getData()));
     return user;
   }
 
@@ -51,19 +47,11 @@ public class CalculateSummaryBotMessageHandler extends BotMessageHandler {
   protected SendMessage createNextMessage(Update update, User user) {
     return SendMessage.builder()
         .chatId(update.getCallbackQuery().getMessage().getChatId())
-        .text(user.getCalculatedResult().toString())
-        .replyMarkup(createInlineKeyboardMarkupForNewCalculation())
-        .build();
-  }
-
-  private InlineKeyboardMarkup createInlineKeyboardMarkupForNewCalculation() {
-    InlineKeyboardButton manButton = InlineKeyboardButton.builder()
-        .text(CallbackMessages.CALCULATE_AGAIN.getData())
-        .callbackData(CallbackMessages.CALCULATE_AGAIN.toString())
-        .build();
-
-    return InlineKeyboardMarkup.builder()
-        .keyboard(Collections.singletonList(Collections.singletonList(manButton)))
+        .text(String.format(
+            BotMessagesUtils.CONFIG_PROTEINS_MESSAGE,
+            user.getProteinsValue(),
+            Emoji.MEAT.getEmoji()
+        ))
         .build();
   }
 }

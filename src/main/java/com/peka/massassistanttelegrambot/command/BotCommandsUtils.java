@@ -18,5 +18,12 @@ public class BotCommandsUtils {
       Для того, чтобы начать мною пользоваться можешь посмотреть меню или уже сразу начать подсчет калорий /calculate !
       """;
 
+  public String CONFIG_PROTEINS_COMMAND_TEXT = """
+      Ты можешь поменять значение по которому рассчитывается количество белков на кг массы тела!
+      По умолчанию стоит значению - 1.5 %s
+      
+      Текущее значение - %s %s
+      """;
+
   public String CALCULATE_COMMAND_TEXT = BotMessagesUtils.CALCULATE_SEX_MESSAGE;
 }

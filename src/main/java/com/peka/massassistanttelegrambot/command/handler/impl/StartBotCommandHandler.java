@@ -30,6 +30,7 @@ public class StartBotCommandHandler extends BotCommandHandler {
   private static final String START = "/start";
   private static final String CALCULATE = "/calculate";
   private static final String HELP = "/help";
+  private static final String CONFIG = "/config";
 
   @Override
   protected String getCommandName() {
@@ -48,6 +49,7 @@ public class StartBotCommandHandler extends BotCommandHandler {
           .id(update.getMessage().getChatId())
           .username(update.getMessage().getChat().getUserName())
           .latestMessage(latestMessage)
+          .proteinsValue(1.5)
           .build();
     }
 
@@ -77,6 +79,10 @@ public class StartBotCommandHandler extends BotCommandHandler {
         .text(START)
         .build();
 
+    KeyboardButton configButton = KeyboardButton.builder()
+        .text(CONFIG)
+        .build();
+
     KeyboardButton calculateButton = KeyboardButton.builder()
         .text(CALCULATE)
         .build();
@@ -89,6 +95,7 @@ public class StartBotCommandHandler extends BotCommandHandler {
         .resizeKeyboard(true)
         .keyboard(Arrays.asList(
             new KeyboardRow(Collections.singletonList(startButton)),
+            new KeyboardRow(Collections.singletonList(configButton)),
             new KeyboardRow(Collections.singletonList(calculateButton)),
             new KeyboardRow(Collections.singletonList(helpButton))
         ))

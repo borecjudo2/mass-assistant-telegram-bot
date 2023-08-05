@@ -1,5 +1,6 @@
 package com.peka.massassistanttelegrambot.service;
 
+import com.peka.massassistanttelegrambot.model.CalculateResult;
 import com.peka.massassistanttelegrambot.model.User;
 
 /**
@@ -10,5 +11,5 @@ import com.peka.massassistanttelegrambot.model.User;
  */
 public interface CalculateService {
 
-  String calculate(User user);
+  CalculateResult calculate(User user);
 }
