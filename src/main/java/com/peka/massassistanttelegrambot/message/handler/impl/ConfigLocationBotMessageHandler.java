@@ -1,15 +1,18 @@
 package com.peka.massassistanttelegrambot.message.handler.impl;
 
+import com.peka.massassistanttelegrambot.exception.TelegramException;
 import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
-import com.peka.massassistanttelegrambot.model.CallbackMessages;
 import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
 import lombok.RequiredArgsConstructor;
+import net.iakovlev.timeshape.TimeZoneEngine;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+
+import java.time.ZoneId;
 
 /**
  * DESCRIPTION
@@ -19,38 +22,49 @@ import org.telegram.telegrambots.meta.api.objects.Update;
  */
 @Service
 @RequiredArgsConstructor
-public class ConfigProteinsDefaultBotMessageHandler extends BotMessageHandler {
+public class ConfigLocationBotMessageHandler extends BotMessageHandler {
+
+  private final TimeZoneEngine timeZoneEngine;
 
   @Override
   protected boolean isNeededMessageType(Update update) {
-    return update.hasCallbackQuery();
+    return update.hasMessage();
   }
 
   @Override
   protected MessageStep getMessageStep() {
-    return MessageStep.CONFIG_PROTEINS;
+    return MessageStep.CONFIG_LOCATION;
   }
 
   @Override
   protected MessageStep getNextMessageStep() {
-    return MessageStep.CONFIG_PROTEINS;
+    return MessageStep.START;
   }
 
   @Override
   protected User fillUserData(Update update, User user) {
-    CallbackMessages proteinsValue = CallbackMessages.valueOf(update.getCallbackQuery().getData());
-    user.setProteinsValue(Double.parseDouble(proteinsValue.getData()));
+    if (!update.getMessage().hasLocation()) {
+      throw new TelegramException("Ты не отправил локацию!(", update);
+    }
+
+    ZoneId zoneId = timeZoneEngine.query(
+            update.getMessage().getLocation().getLatitude(),
+            update.getMessage().getLocation().getLongitude()
+        )
+        .orElseThrow(() -> new TelegramException("Ты не отправил локацию!(", update));
+
+    user.setTimeZone(zoneId.getId());
     return user;
   }
 
   @Override
   protected SendMessage createNextMessage(Update update, User user) {
     return SendMessage.builder()
-        .chatId(update.getCallbackQuery().getMessage().getChatId())
+        .chatId(update.getMessage().getChatId())
         .text(String.format(
-            BotMessagesUtils.CONFIG_PROTEINS_MESSAGE,
-            user.getProteinsValue(),
-            Emoji.MEAT.getEmoji()
+            BotMessagesUtils.CONFIG_LOCATION_MESSAGE,
+            user.getTimeZone(),
+            Emoji.WORLD_MAP.getEmoji()
         ))
         .build();
   }

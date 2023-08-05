@@ -33,6 +33,8 @@ public class User {
 
   private double proteinsValue;
 
+  private String timeZone;
+
   private CalculateType calculateType;
 
   private LatestMessage latestMessage;

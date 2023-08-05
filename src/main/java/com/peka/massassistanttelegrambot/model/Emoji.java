@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 public enum Emoji {
 
   WAVE(EmojiParser.parseToUnicode(":wave:")),
+  WORLD_MAP(EmojiParser.parseToUnicode(":world_map:")),
   FORK(EmojiParser.parseToUnicode(":fork_and_knife:")),
   MEAT(EmojiParser.parseToUnicode(":meat_on_bone:")),
   RAMEN(EmojiParser.parseToUnicode(":ramen:")),
@@ -37,7 +38,6 @@ public enum Emoji {
   MAN_MAGE(EmojiParser.parseToUnicode(":man_mage:")),
   WOMAN_MAGE(EmojiParser.parseToUnicode(":woman_mage:")),
   SPAGHETTI(EmojiParser.parseToUnicode(":spaghetti:"));
-
 
   private final String emoji;
 }

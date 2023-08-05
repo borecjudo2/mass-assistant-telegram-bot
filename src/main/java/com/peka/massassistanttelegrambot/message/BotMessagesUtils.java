@@ -15,6 +15,10 @@ public class BotMessagesUtils {
       Новое значение белка на кг массы тела установленно! %s %s
       """;
 
+  public String CONFIG_LOCATION_MESSAGE = """
+      Новое значение тайм зоны установленно! %s %s
+      """;
+
   public String CALCULATE_SEX_MESSAGE = """
       Выбери свой пол! %s %s
       """;

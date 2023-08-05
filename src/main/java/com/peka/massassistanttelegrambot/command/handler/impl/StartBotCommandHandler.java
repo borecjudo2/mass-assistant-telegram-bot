@@ -31,6 +31,7 @@ public class StartBotCommandHandler extends BotCommandHandler {
   private static final String CALCULATE = "/calculate";
   private static final String HELP = "/help";
   private static final String CONFIG = "/config";
+  private static final String LOCATION = "/location";
 
   @Override
   protected String getCommandName() {
@@ -83,6 +84,10 @@ public class StartBotCommandHandler extends BotCommandHandler {
         .text(CONFIG)
         .build();
 
+    KeyboardButton locationButton = KeyboardButton.builder()
+        .text(LOCATION)
+        .build();
+
     KeyboardButton calculateButton = KeyboardButton.builder()
         .text(CALCULATE)
         .build();
@@ -96,6 +101,7 @@ public class StartBotCommandHandler extends BotCommandHandler {
         .keyboard(Arrays.asList(
             new KeyboardRow(Collections.singletonList(startButton)),
             new KeyboardRow(Collections.singletonList(configButton)),
+            new KeyboardRow(Collections.singletonList(locationButton)),
             new KeyboardRow(Collections.singletonList(calculateButton)),
             new KeyboardRow(Collections.singletonList(helpButton))
         ))

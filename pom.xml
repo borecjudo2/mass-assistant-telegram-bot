@@ -21,10 +21,16 @@
 
     <telegrambots.version>6.7.0</telegrambots.version>
     <emoji.version>5.1.1</emoji.version>
+    <timeshape.version>2022g.17</timeshape.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>net.iakovlev</groupId>
+        <artifactId>timeshape</artifactId>
+        <version>${timeshape.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.telegram</groupId>
         <artifactId>telegrambots</artifactId>
@@ -39,6 +45,10 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>net.iakovlev</groupId>
+      <artifactId>timeshape</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.telegram</groupId>
       <artifactId>telegrambots</artifactId>

@@ -17,7 +17,7 @@ public class MongodbLocalApplicationContextInitializer implements ApplicationCon
 
   private static final String LOCAL_ENV = "local";
 
-  private final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:4.0.10"));
+  private final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:latest"));
 
   @Override
   public void initialize(ConfigurableApplicationContext applicationContext) {
