@@ -1,3 +1,11 @@
+management:
+  endpoints:
+    web:
+      base-path: /management
+  endpoint:
+    health:
+      enabled: true
+
 google:
   app:
     url: https://github.com/
