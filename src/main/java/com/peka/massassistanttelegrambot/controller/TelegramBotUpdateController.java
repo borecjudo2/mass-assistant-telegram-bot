@@ -30,6 +30,8 @@ public class TelegramBotUpdateController {
   @Scheduled(fixedRate = 100)
   public void processUpdate() {
     try {
+      log.info("Just started processUpdate new iteration");
+
       Update update = queue.takeUpdate();
       service.processUpdate(update);
     } catch (TelegramException exception) {
