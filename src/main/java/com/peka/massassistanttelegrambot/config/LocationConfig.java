@@ -15,6 +15,6 @@ public class LocationConfig {
 
   @Bean
   public TimeZoneEngine timeZoneEngine() {
-    return TimeZoneEngine.initialize();
+    return TimeZoneEngine.initialize(35, -10, 75, 180, false);
   }
 }
