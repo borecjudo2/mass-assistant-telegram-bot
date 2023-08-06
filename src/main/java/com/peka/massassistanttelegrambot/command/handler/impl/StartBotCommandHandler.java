@@ -3,6 +3,7 @@ package com.peka.massassistanttelegrambot.command.handler.impl;
 import com.peka.massassistanttelegrambot.command.BotCommandsUtils;
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
 import com.peka.massassistanttelegrambot.model.Emoji;
+import com.peka.massassistanttelegrambot.model.Food;
 import com.peka.massassistanttelegrambot.model.LatestMessage;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
@@ -32,6 +33,7 @@ public class StartBotCommandHandler extends BotCommandHandler {
   private static final String HELP = "/help";
   private static final String CONFIG = "/config";
   private static final String LOCATION = "/location";
+  private static final String SCHEDULE = "/schedule";
 
   @Override
   protected String getCommandName() {
@@ -50,6 +52,14 @@ public class StartBotCommandHandler extends BotCommandHandler {
           .id(update.getMessage().getChatId())
           .username(update.getMessage().getChat().getUserName())
           .latestMessage(latestMessage)
+          .ateFoodsByDay(Collections.singletonList(
+              Food.builder()
+                  .calories(234)
+                  .proteins(12)
+                  .fats(5)
+                  .carbohydrates(124)
+                  .build())
+          )
           .proteinsValue(1.5)
           .build();
     }
@@ -92,6 +102,10 @@ public class StartBotCommandHandler extends BotCommandHandler {
         .text(CALCULATE)
         .build();
 
+    KeyboardButton scheduleButton = KeyboardButton.builder()
+        .text(SCHEDULE)
+        .build();
+
     KeyboardButton helpButton = KeyboardButton.builder()
         .text(HELP)
         .build();
@@ -103,6 +117,7 @@ public class StartBotCommandHandler extends BotCommandHandler {
             new KeyboardRow(Collections.singletonList(configButton)),
             new KeyboardRow(Collections.singletonList(locationButton)),
             new KeyboardRow(Collections.singletonList(calculateButton)),
+            new KeyboardRow(Collections.singletonList(scheduleButton)),
             new KeyboardRow(Collections.singletonList(helpButton))
         ))
         .build();

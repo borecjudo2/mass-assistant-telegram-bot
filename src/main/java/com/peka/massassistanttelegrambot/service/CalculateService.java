@@ -12,4 +12,6 @@ import com.peka.massassistanttelegrambot.model.User;
 public interface CalculateService {
 
   CalculateResult calculate(User user);
+
+  String calculateDayResult(User user);
 }

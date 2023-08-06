@@ -15,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 public enum Emoji {
 
   WAVE(EmojiParser.parseToUnicode(":wave:")),
+  TIMER_CLOCK(EmojiParser.parseToUnicode(":timer_clock:")),
+  X(EmojiParser.parseToUnicode(":x:")),
+  DONE_CHECK(EmojiParser.parseToUnicode(":heavy_check_mark:")),
   WORLD_MAP(EmojiParser.parseToUnicode(":world_map:")),
   FORK(EmojiParser.parseToUnicode(":fork_and_knife:")),
   MEAT(EmojiParser.parseToUnicode(":meat_on_bone:")),

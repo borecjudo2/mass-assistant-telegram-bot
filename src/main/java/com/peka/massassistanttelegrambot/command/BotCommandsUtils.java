@@ -34,5 +34,9 @@ public class BotCommandsUtils {
       Мне не интересно где ты живешь!)
       """;
 
+  public String SCHEDULER_COMMAND_TEXT = """
+      Ты можешь включить или выключить подсчет и уведомление о результате твоего питания за день %s
+      """;
+
   public String CALCULATE_COMMAND_TEXT = BotMessagesUtils.CALCULATE_SEX_MESSAGE;
 }

@@ -66,4 +66,19 @@ public class BotMessagesUtils {
             
       %s
       """;
+
+  public String ERROR_NO_ATE_FOOD_FOR_DAY_RESULT_TASK = """
+      Ты не заполнил ни одного блюда,
+      я не могу посчитать твои результаты!
+      Чтобы получилось в новом дне нажми на /add
+      """;
+
+  public String SCHEDULER_ENABLED_MESSAGE = """
+      Ты включил отправку уведомлений о результате твоего питания за день. %s
+      Сообщение приходит в 00:00 %s
+      """;
+
+  public String SCHEDULER_DISABLED_MESSAGE = """
+      Ты выключил отправку уведомлений о результате твоего питания за день. %s
+      """;
 }
