@@ -38,7 +38,7 @@ public class DayResultSchedulerServiceImpl implements DayResultSchedulerService 
   public void schedule(long chatId, String timeZone) {
     Timer timer = new Timer();
     DayResultTimerTask timerTask = new DayResultTimerTask(bot, this, userRepository, calculateService, chatId);
-    timer.schedule(timerTask, 10000);
+    timer.schedule(timerTask, calculateDuration(timeZone));
 
     scheduledTasks.putIfAbsent(chatId, timer);
 
