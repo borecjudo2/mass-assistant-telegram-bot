@@ -53,7 +53,7 @@ public abstract class BotMessageHandler {
       user.getLatestMessage().setMessageStep(getNextMessageStep());
 
       return user;
-    } catch (TelegramApiException exception) {
+    } catch (Exception exception) {
       log.error(String.format("Exception during execute send message for message=%s", getMessageStep()), exception);
       throw new TelegramException(update, exception);
     }
