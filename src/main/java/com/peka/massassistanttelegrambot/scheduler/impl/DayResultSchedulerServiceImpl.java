@@ -50,6 +50,7 @@ public class DayResultSchedulerServiceImpl implements DayResultSchedulerService 
     return scheduledTasks.get(chatId) != null;
   }
 
+
   @Override
   public void deleteSchedule(long chatId) {
     Timer timer = scheduledTasks.get(chatId);
