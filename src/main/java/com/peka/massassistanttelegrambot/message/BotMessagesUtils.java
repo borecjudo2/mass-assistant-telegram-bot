@@ -81,4 +81,13 @@ public class BotMessagesUtils {
   public String SCHEDULER_DISABLED_MESSAGE = """
       Ты выключил отправку уведомлений о результате твоего питания за день. %s
       """;
+
+  public String ADDED_FOOD_MESSAGE = """
+      Eда добавлена!
+      
+      %s %s
+      %s %s
+      %s %s
+      %s %s
+      """;
 }

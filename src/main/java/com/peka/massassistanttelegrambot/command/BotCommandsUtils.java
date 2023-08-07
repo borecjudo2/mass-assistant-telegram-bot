@@ -38,5 +38,20 @@ public class BotCommandsUtils {
       Ты можешь включить или выключить подсчет и уведомление о результате твоего питания за день %s
       """;
 
+  public String ADD_FOOD_COMMAND_TEXT = """
+      Для того, чтобы добавить еду которую ты съел
+      нужно прислать сообщение в таком формате:
+      Калории %s
+      Белки %s
+      Жиры %s
+      Углеводы %s
+      
+      Пример:
+      545.4
+      50.2
+      6
+      123
+      """;
+
   public String CALCULATE_COMMAND_TEXT = BotMessagesUtils.CALCULATE_SEX_MESSAGE;
 }
