@@ -3,6 +3,8 @@ package com.peka.massassistanttelegrambot.repo;
 import com.peka.massassistanttelegrambot.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.List;
+
 /**
  * DESCRIPTION
  *
@@ -11,4 +13,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface MongodbUserRepository extends MongoRepository<User, Long> {
 
+  List<User> findAllByIsResultTaskEnabled(boolean isResultTaskEnabled);
 }

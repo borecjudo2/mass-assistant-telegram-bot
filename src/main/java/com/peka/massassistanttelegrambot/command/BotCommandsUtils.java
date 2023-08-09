@@ -36,6 +36,7 @@ public class BotCommandsUtils {
 
   public String SCHEDULER_COMMAND_TEXT = """
       Ты можешь включить или выключить подсчет и уведомление о результате твоего питания за день %s
+      Текущее значение %s
       """;
 
   public String ADD_FOOD_COMMAND_TEXT = """

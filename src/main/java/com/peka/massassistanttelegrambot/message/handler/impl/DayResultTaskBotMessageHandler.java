@@ -41,6 +41,10 @@ public class DayResultTaskBotMessageHandler extends BotMessageHandler {
 
   @Override
   protected User fillUserData(Update update, User user) {
+    CallbackMessages message = CallbackMessages.valueOf(update.getCallbackQuery().getData());
+
+    user.setResultTaskEnabled(message.equals(CallbackMessages.ENABLE_DAY_RESULT_TASK));
+
     return user;
   }
 

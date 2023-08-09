@@ -41,6 +41,8 @@ public class User {
 
   private LatestMessage latestMessage;
 
+  private boolean isResultTaskEnabled;
+
   private CalculateResult calculatedResult;
 
   private List<Food> ateFoodsByDay;

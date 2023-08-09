@@ -61,11 +61,14 @@ public class SchedulerBotCommandHandler extends BotCommandHandler {
 
   @Override
   protected SendMessage createMessage(Update update, User user) {
+    Emoji message = user.isResultTaskEnabled() ?  Emoji.DONE_CHECK : Emoji.X;
+
     return SendMessage.builder()
         .chatId(update.getMessage().getChatId())
         .text(String.format(
             BotCommandsUtils.SCHEDULER_COMMAND_TEXT,
-            Emoji.TIMER_CLOCK.getEmoji())
+            Emoji.TIMER_CLOCK.getEmoji(),
+            message.getEmoji())
         )
         .replyMarkup(createInlineKeyboardMarkup())
         .build();

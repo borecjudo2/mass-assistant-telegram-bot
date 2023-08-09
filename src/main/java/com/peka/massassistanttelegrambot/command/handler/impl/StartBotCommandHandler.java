@@ -57,6 +57,7 @@ public class StartBotCommandHandler extends BotCommandHandler {
           .latestMessage(latestMessage)
           .ateFoodsByDay(Collections.emptyList())
           .proteinsValue(1.5)
+          .isResultTaskEnabled(false)
           .build();
     }
 
