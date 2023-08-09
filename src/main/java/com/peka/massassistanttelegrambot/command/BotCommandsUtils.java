@@ -53,5 +53,9 @@ public class BotCommandsUtils {
       123
       """;
 
+  public String CLEAR_FOOD_COMMAND_TEXT = """
+      Удалить всю твою съеденную еду? %s
+      """;
+
   public String CALCULATE_COMMAND_TEXT = BotMessagesUtils.CALCULATE_SEX_MESSAGE;
 }

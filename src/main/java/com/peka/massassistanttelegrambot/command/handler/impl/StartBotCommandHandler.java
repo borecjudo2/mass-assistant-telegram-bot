@@ -34,6 +34,7 @@ public class StartBotCommandHandler extends BotCommandHandler {
   private static final String LOCATION = "/location";
   private static final String SCHEDULE = "/schedule";
   private static final String ADD = "/add";
+  private static final String CLEAR = "/clear";
   private static final String RESULT = "/result";
 
 
@@ -105,6 +106,10 @@ public class StartBotCommandHandler extends BotCommandHandler {
         .text(ADD)
         .build();
 
+    KeyboardButton clearButton = KeyboardButton.builder()
+        .text(CLEAR)
+        .build();
+
     KeyboardButton resultButton = KeyboardButton.builder()
         .text(RESULT)
         .build();
@@ -122,6 +127,7 @@ public class StartBotCommandHandler extends BotCommandHandler {
             new KeyboardRow(Collections.singletonList(calculateButton)),
             new KeyboardRow(Collections.singletonList(scheduleButton)),
             new KeyboardRow(Collections.singletonList(addButton)),
+            new KeyboardRow(Collections.singletonList(clearButton)),
             new KeyboardRow(Collections.singletonList(resultButton)),
             new KeyboardRow(Collections.singletonList(helpButton))
         ))

@@ -18,6 +18,7 @@ public enum CallbackMessages {
   ENABLE_DAY_RESULT_TASK("Включить " + Emoji.DONE_CHECK.getEmoji()),
   DISABLE_DAY_RESULT_TASK("Выключить " + Emoji.X.getEmoji()),
   CONFIG_PROTEINS_1_5("1.5"),
+  CLEAR_FOOD("Да"),
   CONFIG_PROTEINS_2("2");
 
   private final String data;

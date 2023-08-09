@@ -84,10 +84,14 @@ public class BotMessagesUtils {
 
   public String ADDED_FOOD_MESSAGE = """
       Eда добавлена!
-      
+            
       %s %s
       %s %s
       %s %s
       %s %s
+      """;
+
+  public String CLEANED_FOOD_MESSAGE = """
+      Вся еда удаленна!
       """;
 }
