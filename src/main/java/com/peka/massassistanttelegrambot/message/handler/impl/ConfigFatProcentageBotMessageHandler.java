@@ -37,7 +37,7 @@ public class ConfigFatProcentageBotMessageHandler extends BotMessageHandler {
   }
 
   @Override
-  protected MessageStep getNextMessageStep() {
+  protected MessageStep getNextMessageStep(User user) {
     return MessageStep.CONFIG_PROTEINS;
   }
 

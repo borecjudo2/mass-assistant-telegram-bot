@@ -37,7 +37,7 @@ public class CalculateAgainBotMessageHandler extends BotMessageHandler {
   }
 
   @Override
-  protected MessageStep getNextMessageStep() {
+  protected MessageStep getNextMessageStep(User user) {
     return MessageStep.CALCULATE_SEX;
   }
 

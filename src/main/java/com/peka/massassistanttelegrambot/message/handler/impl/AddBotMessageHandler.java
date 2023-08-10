@@ -36,7 +36,7 @@ public class AddBotMessageHandler extends BotMessageHandler {
   }
 
   @Override
-  protected MessageStep getNextMessageStep() {
+  protected MessageStep getNextMessageStep(User user) {
     return MessageStep.START;
   }
 

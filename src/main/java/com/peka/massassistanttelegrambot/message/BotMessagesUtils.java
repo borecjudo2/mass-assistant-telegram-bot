@@ -76,6 +76,10 @@ public class BotMessagesUtils {
       %s 1,9 - Ежедневная нагрузка + физическая работа
       """;
 
+  public String CALCULATE_FATS_MESSAGE = """
+      [Введи свой процент жира!](https://cs10.pikabu.ru/post_img/big/2020/04/07/5/1586243325150517599.png)
+      """;
+
   public String CALCULATE_TYPE_MESSAGE = """
       Выбери свою цель по подсчету калорий! %s
       То есть, поддержание текущего веса, уменьшение или увеличение!

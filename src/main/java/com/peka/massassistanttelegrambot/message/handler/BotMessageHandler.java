@@ -50,7 +50,7 @@ public abstract class BotMessageHandler {
       Message executedMessage = bot.execute(messageToSend);
 
       user.getLatestMessage().setMessageId(executedMessage.getMessageId());
-      user.getLatestMessage().setMessageStep(getNextMessageStep());
+      user.getLatestMessage().setMessageStep(getNextMessageStep(user));
 
       return user;
     } catch (Exception exception) {
@@ -72,7 +72,7 @@ public abstract class BotMessageHandler {
 
   protected abstract MessageStep getMessageStep();
 
-  protected abstract MessageStep getNextMessageStep();
+  protected abstract MessageStep getNextMessageStep(User user);
 
   protected abstract User fillUserData(Update update, User user) throws TelegramApiException;
 

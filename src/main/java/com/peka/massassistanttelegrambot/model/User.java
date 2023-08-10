@@ -35,6 +35,8 @@ public class User {
 
   private boolean isFatPercentageEnabled;
 
+  private int fatPercentage;
+
   private double proteinsValue;
 
   private double fatsValue;
@@ -53,6 +55,36 @@ public class User {
 
   @Override
   public String toString() {
+    if (isFatPercentageEnabled) {
+      String summary = """
+        %s Твой пол - %s
+        %s Твой возраст - %s
+        %s Твой вес - %s
+        %s Твой рост - %s
+        %s Твоя активность - %s
+        %s Твой процент жира - %s
+        %s Твоя цель - %s
+        """;
+
+      return String.format(
+          summary,
+          Emoji.MAN_MAGE.getEmoji() + Emoji.WOMAN_MAGE.getEmoji(),
+          sex.getValue(),
+          Emoji.UNDERAGE.getEmoji(),
+          age,
+          Emoji.SCALES.getEmoji(),
+          weight,
+          Emoji.RULER.getEmoji(),
+          height,
+          Emoji.NONE_ACTIVITY.getEmoji(),
+          activity,
+          Emoji.NUT.getEmoji(),
+          fatPercentage,
+          Emoji.TROPHY.getEmoji(),
+          calculateType.getData()
+      );
+    }
+
     String summary = """
         %s Твой пол - %s
         %s Твой возраст - %s
@@ -61,6 +93,7 @@ public class User {
         %s Твоя активность - %s
         %s Твоя цель - %s
         """;
+
     return String.format(
         summary,
         Emoji.MAN_MAGE.getEmoji() + Emoji.WOMAN_MAGE.getEmoji(),

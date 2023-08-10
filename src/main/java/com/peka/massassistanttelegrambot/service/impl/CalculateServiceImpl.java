@@ -24,9 +24,13 @@ public class CalculateServiceImpl implements CalculateService {
 
     double activityCalories = normalCalories * user.getActivity() * user.getCalculateType().getValue();
 
-    double userTargetWeight = user.getWeight();
-    double proteins = user.getProteinsValue() * userTargetWeight;
-    double fats = 1.0 * userTargetWeight;
+    double userWeight = user.getWeight();
+    if (user.isFatPercentageEnabled()) {
+      double fatPercentage = 1 - (user.getFatPercentage() / 100.0);
+      userWeight = user.getWeight() * fatPercentage;
+    }
+    double proteins = user.getProteinsValue() * userWeight;
+    double fats = user.getFatsValue() * userWeight;
     double carbohydrates = (activityCalories - proteins * 4.2 - fats * 9.29) / 4.2;
 
     return CalculateResult.builder()

@@ -3,7 +3,6 @@ package com.peka.massassistanttelegrambot.message.handler.impl;
 import com.peka.massassistanttelegrambot.exception.TelegramException;
 import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
-import com.peka.massassistanttelegrambot.model.ActivityRate;
 import com.peka.massassistanttelegrambot.model.CalculateType;
 import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.MessageStep;
@@ -26,51 +25,49 @@ import java.util.Collections;
  */
 @Service
 @RequiredArgsConstructor
-public class CalculateActivityBotMessageHandler extends BotMessageHandler {
+public class CalculateFatsBotMessageHandler extends BotMessageHandler {
 
   @Override
   protected boolean isNeededMessageType(Update update) {
-    return update.hasCallbackQuery();
+    return update.hasMessage();
   }
 
   @Override
   protected MessageStep getMessageStep() {
-    return MessageStep.CALCULATE_ACTIVITY;
+    return MessageStep.CALCULATE_FATS;
   }
 
   @Override
   protected MessageStep getNextMessageStep(User user) {
-    return user.isFatPercentageEnabled() ? MessageStep.CALCULATE_FATS : MessageStep.CALCULATE_TYPE;
+    return MessageStep.CALCULATE_TYPE;
   }
 
   @Override
   protected User fillUserData(Update update, User user) {
-    if (!update.hasCallbackQuery()) {
-      throw new TelegramException("Что-то пошло не так", update);
-    }
-
-    ActivityRate activityRate = ActivityRate.valueOf(update.getCallbackQuery().getData());
-    user.setActivity(activityRate.getRate());
+    int fats = validateFats(update);
+    user.setFatPercentage(fats);
 
     return user;
   }
 
+  private int validateFats(Update update) {
+    try {
+      int fats = Integer.parseInt(update.getMessage().getText());
+
+      if (fats <= 0 || fats >= 100) {
+        throw new Exception();
+      }
+
+      return fats;
+    } catch (Exception exception) {
+      throw new TelegramException("Ошибка валидации процента жира! Повторите еще раз!", update);
+    }
+  }
+
   @Override
   protected SendMessage createNextMessage(Update update, User user) {
-    return user.isFatPercentageEnabled() ? createMessageForFatStep(update) : createMessageForTypeStep(update);
-  }
-
-  private SendMessage createMessageForFatStep(Update update) {
     return SendMessage.builder()
-        .chatId(update.getCallbackQuery().getMessage().getChatId())
-        .text(BotMessagesUtils.CALCULATE_FATS_MESSAGE)
-        .parseMode("Markdown")
-        .build();
-  }
-
-  private SendMessage createMessageForTypeStep(Update update) {
-    return SendMessage.builder()
-        .chatId(update.getCallbackQuery().getMessage().getChatId())
+        .chatId(update.getMessage().getChatId())
         .text(String.format(
             BotMessagesUtils.CALCULATE_TYPE_MESSAGE,
             Emoji.TROPHY.getEmoji()

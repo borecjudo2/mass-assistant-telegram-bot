@@ -35,7 +35,7 @@ public class DayResultTaskBotMessageHandler extends BotMessageHandler {
   }
 
   @Override
-  protected MessageStep getNextMessageStep() {
+  protected MessageStep getNextMessageStep(User user) {
     return MessageStep.START;
   }
 
