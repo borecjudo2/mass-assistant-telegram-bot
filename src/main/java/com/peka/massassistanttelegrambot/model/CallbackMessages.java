@@ -17,9 +17,14 @@ public enum CallbackMessages {
   CALCULATE_AGAIN("Подсчитать с новыми данными " + Emoji.DATA.getEmoji() + Emoji.SPAGHETTI.getEmoji()),
   ENABLE_DAY_RESULT_TASK("Включить " + Emoji.DONE_CHECK.getEmoji()),
   DISABLE_DAY_RESULT_TASK("Выключить " + Emoji.X.getEmoji()),
-  CONFIG_PROTEINS_1_5("1.5"),
-  CLEAR_FOOD("Да"),
-  CONFIG_PROTEINS_2("2");
+  CHANGE_CONFIG("Изменить значения"),
+  CONFIG_FAT_PERCENTAGE("Вкл/Выкл процент жира " + Emoji.NUT.getEmoji()),
+  ENABLE_CONFIG_FAT_PERCENTAGE("Вкл процент жира " + Emoji.DONE_CHECK.getEmoji()),
+  DISABLE_CONFIG_FAT_PERCENTAGE("Выкл процент жира " + Emoji.X.getEmoji()),
+  CONFIG_PROTEINS("Изменить количество белка " + Emoji.MEAT.getEmoji()),
+  CONFIG_FATS("Изменить количество жиров " + Emoji.NUT.getEmoji()),
+  KEEP_CONFIG("Оставить так как есть"),
+  CLEAR_FOOD("Да");
 
   private final String data;
 }

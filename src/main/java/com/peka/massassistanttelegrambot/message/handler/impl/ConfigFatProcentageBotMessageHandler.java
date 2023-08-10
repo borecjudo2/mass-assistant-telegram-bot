@@ -1,6 +1,5 @@
 package com.peka.massassistanttelegrambot.message.handler.impl;
 
-import com.peka.massassistanttelegrambot.exception.TelegramException;
 import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.CallbackMessages;
@@ -25,60 +24,45 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class ConfigProteinsBotMessageHandler extends BotMessageHandler {
+public class ConfigFatProcentageBotMessageHandler extends BotMessageHandler {
 
   @Override
   protected boolean isNeededMessageType(Update update) {
-    return true;
+    return update.hasCallbackQuery();
   }
 
   @Override
   protected MessageStep getMessageStep() {
-    return MessageStep.CONFIG_PROTEINS;
+    return MessageStep.CONFIG_FAT_PERCENTAGE;
   }
 
   @Override
   protected MessageStep getNextMessageStep() {
-    return MessageStep.CONFIG_FATS;
+    return MessageStep.CONFIG_PROTEINS;
   }
 
   @Override
   protected User fillUserData(Update update, User user) {
-    if (update.hasCallbackQuery()) {
+    CallbackMessages callbackMessage = CallbackMessages.valueOf(update.getCallbackQuery().getData());
+
+    if (CallbackMessages.KEEP_CONFIG.equals(callbackMessage)) {
       return user;
     }
 
-    double proteins = validateProteins(update);
-    user.setProteinsValue(proteins);
+    user.setFatPercentageEnabled(CallbackMessages.ENABLE_CONFIG_FAT_PERCENTAGE.equals(callbackMessage));
 
     return user;
   }
 
-  private double validateProteins(Update update) {
-    try {
-      double proteins = Double.parseDouble(update.getMessage().getText());
-
-      if (proteins <= 0 || proteins >= 5) {
-        throw new Exception();
-      }
-      return proteins;
-    } catch (Exception exception) {
-      throw new TelegramException("Ошибка валидации количества белка! Повторите еще раз!", update);
-    }
-  }
-
   @Override
   protected SendMessage createNextMessage(Update update, User user) {
-    long chatId = update.hasCallbackQuery() ? update.getCallbackQuery().getMessage().getChatId() :
-        update.getMessage().getChatId();
-
     return SendMessage.builder()
         .replyMarkup(createInlineKeyboardMarkup())
-        .chatId(chatId)
+        .chatId(update.getCallbackQuery().getMessage().getChatId())
         .text(String.format(
-            BotMessagesUtils.CONFIG_FATS_MESSAGE,
-            user.getFatsValue(),
-            Emoji.NUT.getEmoji()
+            BotMessagesUtils.CONFIG_PROTEINS_MESSAGE,
+            user.getProteinsValue(),
+            Emoji.MEAT.getEmoji()
         ))
         .build();
   }

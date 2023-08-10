@@ -1,6 +1,5 @@
 package com.peka.massassistanttelegrambot.message.handler.impl;
 
-import com.peka.massassistanttelegrambot.exception.TelegramException;
 import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.CallbackMessages;
@@ -14,8 +13,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * DESCRIPTION
@@ -25,73 +24,58 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class ConfigProteinsBotMessageHandler extends BotMessageHandler {
+public class ConfigAllBotMessageHandler extends BotMessageHandler {
 
   @Override
   protected boolean isNeededMessageType(Update update) {
-    return true;
+    return update.hasCallbackQuery();
   }
 
   @Override
   protected MessageStep getMessageStep() {
-    return MessageStep.CONFIG_PROTEINS;
+    return MessageStep.CONFIG_ALL;
   }
 
   @Override
   protected MessageStep getNextMessageStep() {
-    return MessageStep.CONFIG_FATS;
+    return MessageStep.CONFIG_FAT_PERCENTAGE;
   }
 
   @Override
   protected User fillUserData(Update update, User user) {
-    if (update.hasCallbackQuery()) {
-      return user;
-    }
-
-    double proteins = validateProteins(update);
-    user.setProteinsValue(proteins);
-
     return user;
-  }
-
-  private double validateProteins(Update update) {
-    try {
-      double proteins = Double.parseDouble(update.getMessage().getText());
-
-      if (proteins <= 0 || proteins >= 5) {
-        throw new Exception();
-      }
-      return proteins;
-    } catch (Exception exception) {
-      throw new TelegramException("Ошибка валидации количества белка! Повторите еще раз!", update);
-    }
   }
 
   @Override
   protected SendMessage createNextMessage(Update update, User user) {
-    long chatId = update.hasCallbackQuery() ? update.getCallbackQuery().getMessage().getChatId() :
-        update.getMessage().getChatId();
-
     return SendMessage.builder()
-        .replyMarkup(createInlineKeyboardMarkup())
-        .chatId(chatId)
+        .replyMarkup(createInlineKeyboardMarkup(user))
+        .chatId(update.getCallbackQuery().getMessage().getChatId())
         .text(String.format(
-            BotMessagesUtils.CONFIG_FATS_MESSAGE,
-            user.getFatsValue(),
-            Emoji.NUT.getEmoji()
+            BotMessagesUtils.CONFIG_FAT_PERCENTAGE_MESSAGE,
+            user.isFatPercentageEnabled() ? "Включено" : "Выключено",
+            user.isFatPercentageEnabled() ? Emoji.DONE_CHECK.getEmoji() : Emoji.X.getEmoji()
         ))
         .build();
   }
 
-  private InlineKeyboardMarkup createInlineKeyboardMarkup() {
+  private InlineKeyboardMarkup createInlineKeyboardMarkup(User user) {
     InlineKeyboardButton keepButton = InlineKeyboardButton.builder()
         .text(String.valueOf(CallbackMessages.KEEP_CONFIG.getData()))
         .callbackData(CallbackMessages.KEEP_CONFIG.toString())
         .build();
 
+    CallbackMessages callbackMessage = user.isFatPercentageEnabled() ? CallbackMessages.DISABLE_CONFIG_FAT_PERCENTAGE :
+        CallbackMessages.ENABLE_CONFIG_FAT_PERCENTAGE;
+    InlineKeyboardButton onOffButton = InlineKeyboardButton.builder()
+        .text(String.valueOf(callbackMessage.getData()))
+        .callbackData(callbackMessage.toString())
+        .build();
+
     return InlineKeyboardMarkup.builder()
-        .keyboard(List.of(
-            Collections.singletonList(keepButton)
+        .keyboard(Arrays.asList(
+            Collections.singletonList(keepButton),
+            Collections.singletonList(onOffButton)
         ))
         .build();
   }

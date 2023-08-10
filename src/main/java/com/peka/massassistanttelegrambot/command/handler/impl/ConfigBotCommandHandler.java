@@ -15,8 +15,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * DESCRIPTION
@@ -43,7 +43,7 @@ public class ConfigBotCommandHandler extends BotCommandHandler {
 
     LatestMessage latestMessage = LatestMessage.builder()
         .chatId(update.getMessage().getChatId())
-        .messageStep(MessageStep.CONFIG_PROTEINS)
+        .messageStep(MessageStep.CONFIG_ALL)
         .build();
 
     user.setLatestMessage(latestMessage);
@@ -56,28 +56,29 @@ public class ConfigBotCommandHandler extends BotCommandHandler {
     return SendMessage.builder()
         .chatId(update.getMessage().getChatId())
         .text(String.format(
-            BotCommandsUtils.CONFIG_PROTEINS_COMMAND_TEXT,
-            Emoji.MEAT.getEmoji(),
+            BotCommandsUtils.CONFIG_ALL_COMMAND_TEXT,
+            Emoji.FORK.getEmoji(),
+            user.isFatPercentageEnabled() ? "Включено" : "Выключено",
+            user.isFatPercentageEnabled() ? Emoji.DONE_CHECK.getEmoji() : Emoji.X.getEmoji(),
             user.getProteinsValue(),
-            Emoji.MEAT.getEmoji()
+            Emoji.MEAT.getEmoji(),
+            user.getFatsValue(),
+            Emoji.NUT.getEmoji()
         ))
         .replyMarkup(createInlineKeyboardMarkup())
         .build();
   }
 
   private InlineKeyboardMarkup createInlineKeyboardMarkup() {
-    InlineKeyboardButton proteinsDefault = InlineKeyboardButton.builder()
-        .text(CallbackMessages.CONFIG_PROTEINS_1_5.getData())
-        .callbackData(CallbackMessages.CONFIG_PROTEINS_1_5.toString())
-        .build();
-
-    InlineKeyboardButton proteinsHyper = InlineKeyboardButton.builder()
-        .text(CallbackMessages.CONFIG_PROTEINS_2.getData())
-        .callbackData(CallbackMessages.CONFIG_PROTEINS_2.toString())
+    InlineKeyboardButton changeConfigButton = InlineKeyboardButton.builder()
+        .text(CallbackMessages.CHANGE_CONFIG.getData())
+        .callbackData(CallbackMessages.CHANGE_CONFIG.toString())
         .build();
 
     return InlineKeyboardMarkup.builder()
-        .keyboard(Collections.singletonList(Arrays.asList(proteinsDefault, proteinsHyper)))
+        .keyboard(List.of(
+            Collections.singletonList(changeConfigButton)
+        ))
         .build();
   }
 }

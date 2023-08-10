@@ -33,7 +33,11 @@ public class User {
 
   private double activity;
 
+  private boolean isFatPercentageEnabled;
+
   private double proteinsValue;
+
+  private double fatsValue;
 
   private String timeZone;
 

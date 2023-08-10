@@ -14,7 +14,10 @@ import lombok.RequiredArgsConstructor;
 public enum MessageStep {
 
   START,
+  CONFIG_ALL,
+  CONFIG_FAT_PERCENTAGE,
   CONFIG_PROTEINS,
+  CONFIG_FATS,
   CONFIG_LOCATION,
   CALCULATE_SEX,
   CALCULATE_AGE,

@@ -11,8 +11,28 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class BotMessagesUtils {
 
+  public String CONFIG_FAT_PERCENTAGE_MESSAGE = """
+      Включить или выключить процент подкожного жира при расчете калорий и БЖУ!
+            
+      Текущее значение - %s %s
+      """;
+
   public String CONFIG_PROTEINS_MESSAGE = """
-      Новое значение белка на кг массы тела установленно! %s %s
+      Изменить значение количества белка на кг массы тела!
+      
+       Текущее значение - %s %s
+       
+       Чтобы изменить значение нужно отправить сообщение!
+       Пример - 2.0
+      """;
+
+  public String CONFIG_FATS_MESSAGE = """
+      Изменить значение количества жиров на кг массы тела!
+      
+       Текущее значение - %s %s
+       
+       Чтобы изменить значение нужно отправить сообщение!
+       Пример - 2.0
       """;
 
   public String CONFIG_LOCATION_MESSAGE = """

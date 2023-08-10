@@ -56,6 +56,8 @@ public class StartBotCommandHandler extends BotCommandHandler {
           .username(update.getMessage().getChat().getUserName())
           .latestMessage(latestMessage)
           .ateFoodsByDay(Collections.emptyList())
+          .isFatPercentageEnabled(false)
+          .fatsValue(1)
           .proteinsValue(1.5)
           .isResultTaskEnabled(false)
           .build();

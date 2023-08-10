@@ -1,7 +1,7 @@
 package com.peka.massassistanttelegrambot.message.handler.impl;
 
+import com.peka.massassistanttelegrambot.command.BotCommandsUtils;
 import com.peka.massassistanttelegrambot.exception.TelegramException;
-import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.CallbackMessages;
 import com.peka.massassistanttelegrambot.model.Emoji;
@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class ConfigProteinsBotMessageHandler extends BotMessageHandler {
+public class ConfigFatsBotMessageHandler extends BotMessageHandler {
 
   @Override
   protected boolean isNeededMessageType(Update update) {
@@ -34,12 +34,12 @@ public class ConfigProteinsBotMessageHandler extends BotMessageHandler {
 
   @Override
   protected MessageStep getMessageStep() {
-    return MessageStep.CONFIG_PROTEINS;
+    return MessageStep.CONFIG_FATS;
   }
 
   @Override
   protected MessageStep getNextMessageStep() {
-    return MessageStep.CONFIG_FATS;
+    return MessageStep.CONFIG_ALL;
   }
 
   @Override
@@ -48,22 +48,22 @@ public class ConfigProteinsBotMessageHandler extends BotMessageHandler {
       return user;
     }
 
-    double proteins = validateProteins(update);
-    user.setProteinsValue(proteins);
+    double fats = validateFats(update);
+    user.setFatsValue(fats);
 
     return user;
   }
 
-  private double validateProteins(Update update) {
+  private double validateFats(Update update) {
     try {
-      double proteins = Double.parseDouble(update.getMessage().getText());
+      double fats = Double.parseDouble(update.getMessage().getText());
 
-      if (proteins <= 0 || proteins >= 5) {
+      if (fats <= 0 || fats >= 5) {
         throw new Exception();
       }
-      return proteins;
+      return fats;
     } catch (Exception exception) {
-      throw new TelegramException("Ошибка валидации количества белка! Повторите еще раз!", update);
+      throw new TelegramException("Ошибка валидации количества жиров! Повторите еще раз!", update);
     }
   }
 
@@ -73,25 +73,30 @@ public class ConfigProteinsBotMessageHandler extends BotMessageHandler {
         update.getMessage().getChatId();
 
     return SendMessage.builder()
-        .replyMarkup(createInlineKeyboardMarkup())
         .chatId(chatId)
         .text(String.format(
-            BotMessagesUtils.CONFIG_FATS_MESSAGE,
+            BotCommandsUtils.CONFIG_ALL_COMMAND_TEXT,
+            Emoji.FORK.getEmoji(),
+            user.isFatPercentageEnabled() ? "Включено" : "Выключено",
+            user.isFatPercentageEnabled() ? Emoji.DONE_CHECK.getEmoji() : Emoji.X.getEmoji(),
+            user.getProteinsValue(),
+            Emoji.MEAT.getEmoji(),
             user.getFatsValue(),
             Emoji.NUT.getEmoji()
         ))
+        .replyMarkup(createInlineKeyboardMarkup())
         .build();
   }
 
   private InlineKeyboardMarkup createInlineKeyboardMarkup() {
-    InlineKeyboardButton keepButton = InlineKeyboardButton.builder()
-        .text(String.valueOf(CallbackMessages.KEEP_CONFIG.getData()))
-        .callbackData(CallbackMessages.KEEP_CONFIG.toString())
+    InlineKeyboardButton changeConfigButton = InlineKeyboardButton.builder()
+        .text(CallbackMessages.CHANGE_CONFIG.getData())
+        .callbackData(CallbackMessages.CHANGE_CONFIG.toString())
         .build();
 
     return InlineKeyboardMarkup.builder()
         .keyboard(List.of(
-            Collections.singletonList(keepButton)
+            Collections.singletonList(changeConfigButton)
         ))
         .build();
   }
