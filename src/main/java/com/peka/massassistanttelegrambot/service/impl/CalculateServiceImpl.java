@@ -75,6 +75,13 @@ public class CalculateServiceImpl implements CalculateService {
     return stringBuilder.toString();
   }
 
+  @Override
+  public Food calcylateCaloriesForFood(Food food) {
+    double calories = food.getProteins() * 4.2 + food.getFats() * 9.29 + food.getCarbohydrates() * 4.2;
+    food.setCalories(calories);
+    return food;
+  }
+
   private void calculateDayResult(String typeCalculate, Emoji emoji, double calculatedValue, double dayValue,
       StringBuilder stringBuilder) {
 

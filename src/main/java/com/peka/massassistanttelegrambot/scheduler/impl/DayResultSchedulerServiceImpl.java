@@ -36,6 +36,11 @@ public class DayResultSchedulerServiceImpl implements DayResultSchedulerService 
 
   @Override
   public void schedule(long chatId, String timeZone) {
+    if (isExistTask(chatId)) {
+      log.info("Already exist day result schedule task for chatId=" + chatId);
+      return;
+    }
+
     Timer timer = new Timer();
     DayResultTimerTask timerTask = new DayResultTimerTask(bot, this, userRepository, calculateService, chatId);
     timer.schedule(timerTask, calculateDuration(timeZone));
@@ -49,7 +54,6 @@ public class DayResultSchedulerServiceImpl implements DayResultSchedulerService 
   public boolean isExistTask(long chatId) {
     return scheduledTasks.get(chatId) != null;
   }
-
 
   @Override
   public void deleteSchedule(long chatId) {

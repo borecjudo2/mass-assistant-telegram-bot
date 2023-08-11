@@ -49,16 +49,16 @@ public class BotCommandsUtils {
   public String ADD_FOOD_COMMAND_TEXT = """
       Для того, чтобы добавить еду которую ты съел
       нужно прислать сообщение в таком формате:
-      Калории %s
       Белки %s
       Жиры %s
       Углеводы %s
             
       Пример:
-      545.4
       50.2
       6
       123
+            
+      А я потом посчитаю получившиеся калории!
       """;
 
   public String CLEAR_FOOD_COMMAND_TEXT = """

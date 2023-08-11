@@ -7,7 +7,7 @@ import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.Food;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
-import com.peka.massassistanttelegrambot.scheduler.DayResultSchedulerService;
+import com.peka.massassistanttelegrambot.service.CalculateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -23,7 +23,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @RequiredArgsConstructor
 public class AddBotMessageHandler extends BotMessageHandler {
 
-  private final DayResultSchedulerService schedulerService;
+  private final CalculateService calculateService;
 
   @Override
   protected boolean isNeededMessageType(Update update) {
@@ -43,9 +43,7 @@ public class AddBotMessageHandler extends BotMessageHandler {
   @Override
   protected User fillUserData(Update update, User user) {
     Food food = parseData(update);
-    if (food.getCalories() < 0) {
-      throw new TelegramException("Такого значения калорий быть не может!", update);
-    }
+
     if (food.getProteins() < 0) {
       throw new TelegramException("Такого значения белка быть не может!", update);
     }
@@ -56,7 +54,7 @@ public class AddBotMessageHandler extends BotMessageHandler {
       throw new TelegramException("Такого значения углеводов быть не может!", update);
     }
 
-    user.getAteFoodsByDay().add(food);
+    user.getAteFoodsByDay().add(calculateService.calcylateCaloriesForFood(food));
 
     return user;
   }
@@ -65,10 +63,9 @@ public class AddBotMessageHandler extends BotMessageHandler {
     try {
       String[] values = update.getMessage().getText().split("\n");
       return Food.builder()
-          .calories(Double.parseDouble(values[0]))
-          .proteins(Double.parseDouble(values[1]))
-          .fats(Double.parseDouble(values[2]))
-          .carbohydrates(Double.parseDouble(values[3]))
+          .proteins(Double.parseDouble(values[0]))
+          .fats(Double.parseDouble(values[1]))
+          .carbohydrates(Double.parseDouble(values[2]))
           .build();
     } catch (Exception exception) {
       throw new TelegramException("В неправильном формате отправлено сообщение об еде", update);

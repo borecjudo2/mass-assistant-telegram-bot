@@ -109,7 +109,7 @@ public class BotMessagesUtils {
   public String ADDED_FOOD_MESSAGE = """
       Eда добавлена!
             
-      %s %s
+      %.1f %s
       %s %s
       %s %s
       %s %s
