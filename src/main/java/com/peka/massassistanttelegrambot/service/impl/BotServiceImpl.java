@@ -2,7 +2,7 @@ package com.peka.massassistanttelegrambot.service.impl;
 
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
 import com.peka.massassistanttelegrambot.exception.TelegramException;
-import com.peka.massassistanttelegrambot.message.custom.BotCustomMessageHandler;
+import com.peka.massassistanttelegrambot.message.handler.custom.BotCustomMessageHandler;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;

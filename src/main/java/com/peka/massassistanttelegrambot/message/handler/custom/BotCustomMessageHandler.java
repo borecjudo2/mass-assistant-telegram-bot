@@ -1,4 +1,4 @@
-package com.peka.massassistanttelegrambot.message.custom;
+package com.peka.massassistanttelegrambot.message.handler.custom;
 
 import com.peka.massassistanttelegrambot.model.User;
 import org.telegram.telegrambots.meta.api.objects.Update;

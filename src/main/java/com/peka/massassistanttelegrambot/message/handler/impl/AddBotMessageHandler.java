@@ -1,10 +1,8 @@
 package com.peka.massassistanttelegrambot.message.handler.impl;
 
 import com.peka.massassistanttelegrambot.exception.TelegramException;
-import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.CallbackMessages;
-import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.Food;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
@@ -89,18 +87,7 @@ public class AddBotMessageHandler extends BotMessageHandler {
 
     return SendMessage.builder()
         .chatId(update.getMessage().getChatId())
-        .text(String.format(
-            BotMessagesUtils.ADDED_FOOD_MESSAGE,
-            food.getName(),
-            food.getCalories(),
-            Emoji.FORK.getEmoji(),
-            food.getProteins(),
-            Emoji.MEAT.getEmoji(),
-            food.getFats(),
-            Emoji.NUT.getEmoji(),
-            food.getCarbohydrates(),
-            Emoji.RAMEN.getEmoji()
-        ))
+        .text("Еда добавлена!\n\n" + food.toString())
         .replyMarkup(createInlineKeyboardMarkup(food))
         .build();
   }

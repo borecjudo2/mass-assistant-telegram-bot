@@ -20,7 +20,7 @@ public enum ExceptionMessage {
       а потом можешь добавить в избранные!
       """),
 
-  ERROR_DELETE_FOOD("""
+  ERROR_DELETED_FOOD("""
       Еда была удаленна!
       """);
 

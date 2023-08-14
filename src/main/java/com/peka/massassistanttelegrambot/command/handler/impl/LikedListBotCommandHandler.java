@@ -3,6 +3,9 @@ package com.peka.massassistanttelegrambot.command.handler.impl;
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
 import com.peka.massassistanttelegrambot.exception.TelegramException;
 import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
+import com.peka.massassistanttelegrambot.model.CallbackMessages;
+import com.peka.massassistanttelegrambot.model.LatestMessage;
+import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,6 +40,13 @@ public class LikedListBotCommandHandler extends BotCommandHandler {
       throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
     }
 
+    LatestMessage latestMessage = LatestMessage.builder()
+        .chatId(update.getMessage().getChatId())
+        .messageStep(MessageStep.LIKED_LIST)
+        .build();
+
+    user.setLatestMessage(latestMessage);
+
     return user;
   }
 
@@ -59,7 +69,7 @@ public class LikedListBotCommandHandler extends BotCommandHandler {
   private InlineKeyboardMarkup createInlineKeyboardMarkup(User user) {
     List<List<InlineKeyboardButton>> buttons = user.getLikedFoods().stream().map(food -> InlineKeyboardButton.builder()
             .text(food.getName())
-            .callbackData(food.getName())
+            .callbackData(CallbackMessages.OPEN_FOOD_DETAILS + CallbackMessages.CALLBACK_SPLITTER.getData() + food.getName())
             .build())
         .map(Collections::singletonList)
         .toList();

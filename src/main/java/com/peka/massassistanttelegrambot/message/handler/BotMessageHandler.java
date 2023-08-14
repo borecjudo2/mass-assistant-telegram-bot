@@ -55,7 +55,7 @@ public abstract class BotMessageHandler {
       return user;
     } catch (Exception exception) {
       log.error(String.format("Exception during execute send message for message=%s", getMessageStep()), exception);
-      throw new TelegramException(update, exception, false);
+      throw new TelegramException(update, exception, true);
     }
   }
 

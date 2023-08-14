@@ -1,7 +1,7 @@
-package com.peka.massassistanttelegrambot.message.custom.impl;
+package com.peka.massassistanttelegrambot.message.handler.custom.impl;
 
 import com.peka.massassistanttelegrambot.exception.TelegramException;
-import com.peka.massassistanttelegrambot.message.custom.BotCustomMessageHandler;
+import com.peka.massassistanttelegrambot.message.handler.custom.BotCustomMessageHandler;
 import com.peka.massassistanttelegrambot.model.CallbackMessages;
 import com.peka.massassistanttelegrambot.model.ExceptionMessage;
 import com.peka.massassistanttelegrambot.model.Food;
@@ -18,6 +18,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.Collections;
+import java.util.List;
 
 /**
  * DESCRIPTION
@@ -27,15 +28,16 @@ import java.util.Collections;
  */
 @Service
 @RequiredArgsConstructor
-public class RemoveFoodFromLikedMessageHandler implements BotCustomMessageHandler {
+public class OpenLikedFoodMessageHandler implements BotCustomMessageHandler {
 
+  public static final int MAX_LIKED_FOODS_SIZE = 10;
   private final MongodbUserRepository userRepository;
   private final TelegramLongPollingBot bot;
 
   @Override
   public boolean isMyMessage(Update update, User user) {
     return update.hasCallbackQuery()
-           && update.getCallbackQuery().getData().contains(CallbackMessages.FOOD_REMOVE_FROM_LIKED.toString());
+           && update.getCallbackQuery().getData().contains(CallbackMessages.OPEN_FOOD_DETAILS.toString());
   }
 
   @Override
@@ -45,14 +47,16 @@ public class RemoveFoodFromLikedMessageHandler implements BotCustomMessageHandle
         throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
       }
 
-      String foodName = update.getCallbackQuery().getData().split(CallbackMessages.CALLBACK_SPLITTER.getData())[1];
       User existingUser = userRepository.findById(user.getId()).orElseThrow();
+      if (existingUser.getLikedFoods().size() == MAX_LIKED_FOODS_SIZE) {
+        throw new TelegramException("Ты не можешь больше добавить в избранные! Максимум 10 позиций!", update, true);
+      }
+
+      String foodName = update.getCallbackQuery().getData().split(CallbackMessages.CALLBACK_SPLITTER.getData())[1];
       Food existingFood = existingUser.getLikedFoods().stream()
           .filter(food -> food.getName().equals(foodName))
           .findFirst()
-          .orElseThrow(() -> new TelegramException(ExceptionMessage.ERROR_DELETE_FOOD.getText(), update, true));
-
-      user.getLikedFoods().remove(existingFood);
+          .orElseThrow(() -> new TelegramException(ExceptionMessage.ERROR_DELETED_FOOD.getText(), update, true));
 
       sendUpdatedMessage(update, existingFood);
 
@@ -72,7 +76,7 @@ public class RemoveFoodFromLikedMessageHandler implements BotCustomMessageHandle
 
     SendMessage sendMessage = SendMessage.builder()
         .chatId(update.getCallbackQuery().getMessage().getChatId())
-        .text(update.getCallbackQuery().getMessage().getText())
+        .text(food.toString())
         .replyMarkup(createInlineKeyboardMarkup(food))
         .build();
 
@@ -80,13 +84,21 @@ public class RemoveFoodFromLikedMessageHandler implements BotCustomMessageHandle
   }
 
   private InlineKeyboardMarkup createInlineKeyboardMarkup(Food food) {
-    InlineKeyboardButton addToLikedButton = InlineKeyboardButton.builder()
-        .text(CallbackMessages.FOOD_ADD_TO_LIKED.getData())
-        .callbackData(CallbackMessages.FOOD_ADD_TO_LIKED + CallbackMessages.CALLBACK_SPLITTER.getData() + food.getName())
+    InlineKeyboardButton addToEatenButton = InlineKeyboardButton.builder()
+        .text(CallbackMessages.ADD_TO_EATEN_FOOD.getData())
+        .callbackData(CallbackMessages.ADD_TO_EATEN_FOOD + CallbackMessages.CALLBACK_SPLITTER.getData() + food.getName())
+        .build();
+
+    InlineKeyboardButton removeFromLikedButton = InlineKeyboardButton.builder()
+        .text(CallbackMessages.FOOD_REMOVE_FROM_LIKED.getData())
+        .callbackData(CallbackMessages.FOOD_REMOVE_FROM_LIKED + CallbackMessages.CALLBACK_SPLITTER.getData() + food.getName())
         .build();
 
     return InlineKeyboardMarkup.builder()
-        .keyboard(Collections.singletonList(Collections.singletonList(addToLikedButton)))
+        .keyboard(List.of(
+            Collections.singletonList(addToEatenButton),
+            Collections.singletonList(removeFromLikedButton)
+        ))
         .build();
   }
 }

@@ -27,6 +27,8 @@ public enum CallbackMessages {
   KEEP_CONFIG("Оставить так как есть"),
   FOOD_ADD_TO_LIKED("Добавить в избранное " + Emoji.BLACK_HEART.getEmoji()),
   FOOD_REMOVE_FROM_LIKED("Удалить из избранных " + Emoji.RED_HEART.getEmoji()),
+  ADD_TO_EATEN_FOOD("Добавить в съеденное за день " + Emoji.FORK.getEmoji()),
+  OPEN_FOOD_DETAILS(""),
   CLEAR_FOOD("Да");
 
   private final String data;

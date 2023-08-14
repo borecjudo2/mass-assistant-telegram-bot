@@ -106,10 +106,9 @@ public class BotMessagesUtils {
       Ты выключил отправку уведомлений о результате твоего питания за день. %s
       """;
 
-  public String ADDED_FOOD_MESSAGE = """
-      Eда добавлена!
-            
+  public String ADDED_FOOD_MESSAGE = """      
       %s
+      
       %.1f %s
       %s %s
       %s %s

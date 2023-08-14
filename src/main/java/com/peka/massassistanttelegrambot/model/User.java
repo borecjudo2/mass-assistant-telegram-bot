@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * DESCRIPTION
@@ -53,7 +54,7 @@ public class User {
 
   private List<Food> ateFoodsByDay;
 
-  private List<Food> likedFoods;
+  private Set<Food> likedFoods;
 
   @Override
   public String toString() {
