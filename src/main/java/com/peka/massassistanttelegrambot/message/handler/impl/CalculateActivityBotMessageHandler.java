@@ -46,7 +46,7 @@ public class CalculateActivityBotMessageHandler extends BotMessageHandler {
   @Override
   protected User fillUserData(Update update, User user) {
     if (!update.hasCallbackQuery()) {
-      throw new TelegramException("Что-то пошло не так", update);
+      throw new TelegramException("Что-то пошло не так", update, true);
     }
 
     ActivityRate activityRate = ActivityRate.valueOf(update.getCallbackQuery().getData());

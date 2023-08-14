@@ -2,6 +2,7 @@ package com.peka.massassistanttelegrambot.command.handler;
 
 import com.peka.massassistanttelegrambot.exception.TelegramException;
 import com.peka.massassistanttelegrambot.model.User;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -20,6 +21,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public abstract class BotCommandHandler {
 
   @Autowired
+  @Getter
   private TelegramLongPollingBot bot;
 
   public boolean isMyCommand(Update update) {
@@ -37,9 +39,9 @@ public abstract class BotCommandHandler {
       }
 
       return user;
-    } catch (TelegramApiException exception) {
+    } catch (Exception exception) {
       log.error(String.format("Exception during execute send message for command=%s", getCommandName()), exception);
-      throw new TelegramException(update, exception);
+      throw new TelegramException(update, exception, true);
     }
   }
 
@@ -47,5 +49,5 @@ public abstract class BotCommandHandler {
 
   protected abstract User fillUserData(Update update, User user);
 
-  protected abstract SendMessage createMessage(Update update, User user);
+  protected abstract SendMessage createMessage(Update update, User user) throws TelegramApiException;
 }

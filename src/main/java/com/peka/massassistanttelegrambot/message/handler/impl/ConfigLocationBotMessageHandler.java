@@ -44,14 +44,14 @@ public class ConfigLocationBotMessageHandler extends BotMessageHandler {
   @Override
   protected User fillUserData(Update update, User user) {
     if (!update.getMessage().hasLocation()) {
-      throw new TelegramException("Ты не отправил локацию!(", update);
+      throw new TelegramException("Ты не отправил локацию!(", update, true);
     }
 
     ZoneId zoneId = timeZoneEngine.query(
             update.getMessage().getLocation().getLatitude(),
             update.getMessage().getLocation().getLongitude()
         )
-        .orElseThrow(() -> new TelegramException("Ты не отправил локацию!(", update));
+        .orElseThrow(() -> new TelegramException("Ты не отправил локацию!(", update, true));
 
     user.setTimeZone(zoneId.getId());
     return user;

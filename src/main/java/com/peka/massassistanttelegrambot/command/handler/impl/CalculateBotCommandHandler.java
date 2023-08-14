@@ -39,7 +39,7 @@ public class CalculateBotCommandHandler extends BotCommandHandler {
   @Override
   protected User fillUserData(Update update, User user) {
     if (user == null) {
-      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update);
+      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
     }
 
     MessageStep messageStep = user.getCalculatedResult() == null ? MessageStep.CALCULATE_SEX :

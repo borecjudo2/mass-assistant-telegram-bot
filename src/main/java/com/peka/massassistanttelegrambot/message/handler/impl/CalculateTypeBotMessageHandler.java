@@ -45,7 +45,7 @@ public class CalculateTypeBotMessageHandler extends BotMessageHandler {
   @Override
   protected User fillUserData(Update update, User user) {
     if (!update.hasCallbackQuery()) {
-      throw new TelegramException("Что-то пошло не так", update);
+      throw new TelegramException("Что-то пошло не так", update, true);
     }
 
     CalculateType calculateType = CalculateType.valueOf(update.getCallbackQuery().getData());

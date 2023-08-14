@@ -53,6 +53,8 @@ public class User {
 
   private List<Food> ateFoodsByDay;
 
+  private List<Food> likedFoods;
+
   @Override
   public String toString() {
     if (isFatPercentageEnabled) {

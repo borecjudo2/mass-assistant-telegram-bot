@@ -2,6 +2,7 @@ package com.peka.massassistanttelegrambot.service.impl;
 
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
 import com.peka.massassistanttelegrambot.exception.TelegramException;
+import com.peka.massassistanttelegrambot.message.custom.BotCustomMessageHandler;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;
@@ -32,6 +33,7 @@ public class BotServiceImpl implements BotService {
   private final MongodbUserRepository userRepository;
   private final List<BotCommandHandler> botCommandHandlers;
   private final List<BotMessageHandler> botMessageHandlers;
+  private final List<BotCustomMessageHandler> botBotCustomMessageHandlers;
 
   @Override
   public void processUpdate(Update update) {
@@ -50,20 +52,31 @@ public class BotServiceImpl implements BotService {
     return () -> botMessageHandlers.stream()
         .filter(botMessageHandler -> botMessageHandler.isMyMessage(existingUser, update))
         .findFirst()
+        .ifPresentOrElse(botMessageHandler -> saveUser(botMessageHandler.handle(update, existingUser)),
+            handleCustomMessages(existingUser, update));
+  }
+
+  private Runnable handleCustomMessages(User existingUser, Update update) {
+    return () -> botBotCustomMessageHandlers.stream()
+        .filter(botMessageHandler -> botMessageHandler.isMyMessage(update, existingUser))
+        .findFirst()
         .ifPresentOrElse(botMessageHandler ->
-            saveUser(botMessageHandler.handle(update, existingUser)), handleOtherMessages(update));
+            saveUser(botMessageHandler.handleMessage(update, existingUser)), handleOtherMessages(update));
   }
 
   private Runnable handleOtherMessages(Update update) {
     return () -> {
       try {
+        long chatId = update.hasCallbackQuery() ? update.getCallbackQuery().getMessage().getChatId() :
+            update.getMessage().getChatId();
+
         SendMessage messageToSend = SendMessage.builder()
-            .chatId(update.getMessage().getChatId())
-            .text("Так хватит тут баловаться!")
+            .chatId(chatId)
+            .text("Так, хватит тут баловаться!")
             .build();
         bot.execute(messageToSend);
       } catch (TelegramApiException exception) {
-        throw new TelegramException(update, exception);
+        throw new TelegramException(update, exception, false);
       }
     };
   }

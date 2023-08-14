@@ -109,6 +109,7 @@ public class BotMessagesUtils {
   public String ADDED_FOOD_MESSAGE = """
       Eда добавлена!
             
+      %s
       %.1f %s
       %s %s
       %s %s
@@ -117,5 +118,13 @@ public class BotMessagesUtils {
 
   public String CLEANED_FOOD_MESSAGE = """
       Вся еда удаленна!
+      """;
+
+  public String LIST_LIKED_FOODS = """
+      Список избранной еды!
+      """;
+
+  public String EMPTY_LIKED_FOODS = """
+      Список избранной еды - пуст!
       """;
 }

@@ -1,12 +1,8 @@
 package com.peka.massassistanttelegrambot.command.handler.impl;
 
-import com.peka.massassistanttelegrambot.command.BotCommandsUtils;
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
 import com.peka.massassistanttelegrambot.exception.TelegramException;
-import com.peka.massassistanttelegrambot.model.CallbackMessages;
-import com.peka.massassistanttelegrambot.model.Emoji;
-import com.peka.massassistanttelegrambot.model.LatestMessage;
-import com.peka.massassistanttelegrambot.model.MessageStep;
+import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.Collections;
+import java.util.List;
 
 /**
  * DESCRIPTION
@@ -25,13 +22,13 @@ import java.util.Collections;
  */
 @Service
 @RequiredArgsConstructor
-public class ClearBotCommandHandler extends BotCommandHandler {
+public class LikedListBotCommandHandler extends BotCommandHandler {
 
-  private static final String CLEAR = "/clear";
+  private static final String LIKED_LIST = "/liked_list";
 
   @Override
   protected String getCommandName() {
-    return CLEAR;
+    return LIKED_LIST;
   }
 
   @Override
@@ -40,36 +37,35 @@ public class ClearBotCommandHandler extends BotCommandHandler {
       throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
     }
 
-    LatestMessage latestMessage = LatestMessage.builder()
-        .chatId(update.getMessage().getChatId())
-        .messageStep(MessageStep.CLEAR_FOOD)
-        .build();
-
-    user.setLatestMessage(latestMessage);
-
     return user;
   }
 
   @Override
   protected SendMessage createMessage(Update update, User user) {
+    if (user.getLikedFoods().isEmpty()) {
+      return SendMessage.builder()
+          .chatId(update.getMessage().getChatId())
+          .text(BotMessagesUtils.EMPTY_LIKED_FOODS)
+          .build();
+    }
+
     return SendMessage.builder()
-        .replyMarkup(createInlineKeyboardMarkup())
         .chatId(update.getMessage().getChatId())
-        .text(String.format(
-            BotCommandsUtils.CLEAR_FOOD_COMMAND_TEXT,
-            Emoji.RAMEN.getEmoji())
-        )
+        .text(BotMessagesUtils.LIST_LIKED_FOODS)
+        .replyMarkup(createInlineKeyboardMarkup(user))
         .build();
   }
 
-  private InlineKeyboardMarkup createInlineKeyboardMarkup() {
-    InlineKeyboardButton yesButton = InlineKeyboardButton.builder()
-        .text(CallbackMessages.CLEAR_FOOD.getData())
-        .callbackData(CallbackMessages.CLEAR_FOOD.toString())
-        .build();
+  private InlineKeyboardMarkup createInlineKeyboardMarkup(User user) {
+    List<List<InlineKeyboardButton>> buttons = user.getLikedFoods().stream().map(food -> InlineKeyboardButton.builder()
+            .text(food.getName())
+            .callbackData(food.getName())
+            .build())
+        .map(Collections::singletonList)
+        .toList();
 
     return InlineKeyboardMarkup.builder()
-        .keyboard(Collections.singletonList(Collections.singletonList(yesButton)))
+        .keyboard(buttons)
         .build();
   }
 }

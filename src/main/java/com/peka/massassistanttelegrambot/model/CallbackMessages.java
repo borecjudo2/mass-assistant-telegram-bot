@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum CallbackMessages {
 
+  CALLBACK_SPLITTER("//"),
   CALCULATE("Подсчитать калории и БЖУ " + Emoji.DATA.getEmoji() + Emoji.SPAGHETTI.getEmoji()),
   CALCULATE_AGAIN("Подсчитать с новыми данными " + Emoji.DATA.getEmoji() + Emoji.SPAGHETTI.getEmoji()),
   ENABLE_DAY_RESULT_TASK("Включить " + Emoji.DONE_CHECK.getEmoji()),
@@ -24,6 +25,8 @@ public enum CallbackMessages {
   CONFIG_PROTEINS("Изменить количество белка " + Emoji.MEAT.getEmoji()),
   CONFIG_FATS("Изменить количество жиров " + Emoji.NUT.getEmoji()),
   KEEP_CONFIG("Оставить так как есть"),
+  FOOD_ADD_TO_LIKED("Добавить в избранное " + Emoji.BLACK_HEART.getEmoji()),
+  FOOD_REMOVE_FROM_LIKED("Удалить из избранных " + Emoji.RED_HEART.getEmoji()),
   CLEAR_FOOD("Да");
 
   private final String data;

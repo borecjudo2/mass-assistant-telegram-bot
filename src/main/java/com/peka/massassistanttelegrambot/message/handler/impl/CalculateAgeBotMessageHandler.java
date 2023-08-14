@@ -64,7 +64,7 @@ public class CalculateAgeBotMessageHandler extends BotMessageHandler {
 
       return age;
     } catch (Exception exception) {
-      throw new TelegramException("Ошибка валидации возраста! Повторите еще раз!", update);
+      throw new TelegramException("Ошибка валидации возраста! Повторите еще раз!", update, true);
     }
   }
 

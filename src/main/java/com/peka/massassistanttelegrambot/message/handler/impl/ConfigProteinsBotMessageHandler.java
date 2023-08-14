@@ -63,7 +63,7 @@ public class ConfigProteinsBotMessageHandler extends BotMessageHandler {
       }
       return proteins;
     } catch (Exception exception) {
-      throw new TelegramException("Ошибка валидации количества белка! Повторите еще раз!", update);
+      throw new TelegramException("Ошибка валидации количества белка! Повторите еще раз!", update, true);
     }
   }
 

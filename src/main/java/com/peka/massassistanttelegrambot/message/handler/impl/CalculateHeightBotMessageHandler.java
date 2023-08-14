@@ -68,7 +68,7 @@ public class CalculateHeightBotMessageHandler extends BotMessageHandler {
       }
       return height;
     } catch (Exception exception) {
-      throw new TelegramException("Ошибка валидации роста! Повторите еще раз!", update);
+      throw new TelegramException("Ошибка валидации роста! Повторите еще раз!", update, true);
     }
   }
 

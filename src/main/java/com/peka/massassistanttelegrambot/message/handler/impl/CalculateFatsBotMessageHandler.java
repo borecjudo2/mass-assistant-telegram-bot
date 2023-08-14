@@ -60,7 +60,7 @@ public class CalculateFatsBotMessageHandler extends BotMessageHandler {
 
       return fats;
     } catch (Exception exception) {
-      throw new TelegramException("Ошибка валидации процента жира! Повторите еще раз!", update);
+      throw new TelegramException("Ошибка валидации процента жира! Повторите еще раз!", update, true);
     }
   }
 

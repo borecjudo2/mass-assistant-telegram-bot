@@ -38,15 +38,15 @@ public class SchedulerBotCommandHandler extends BotCommandHandler {
   @Override
   protected User fillUserData(Update update, User user) {
     if (user == null) {
-      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update);
+      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
     }
 
     if (user.getTimeZone() == null || user.getTimeZone().isBlank()) {
-      throw new TelegramException("Нажми на /location я не знаю твою тайм зону!", update);
+      throw new TelegramException("Нажми на /location я не знаю твою тайм зону!", update, true);
     }
 
     if (user.getCalculatedResult() == null) {
-      throw new TelegramException("Нажми на /calculate я не знаю твою дневную норму!", update);
+      throw new TelegramException("Нажми на /calculate я не знаю твою дневную норму!", update, true);
     }
 
     LatestMessage latestMessage = LatestMessage.builder()

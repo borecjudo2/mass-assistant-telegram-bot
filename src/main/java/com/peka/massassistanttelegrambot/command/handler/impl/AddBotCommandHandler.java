@@ -32,7 +32,7 @@ public class AddBotCommandHandler extends BotCommandHandler {
   @Override
   protected User fillUserData(Update update, User user) {
     if (user == null) {
-      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update);
+      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
     }
 
     LatestMessage latestMessage = LatestMessage.builder()

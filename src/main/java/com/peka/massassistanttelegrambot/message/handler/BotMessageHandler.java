@@ -29,7 +29,7 @@ public abstract class BotMessageHandler {
 
   public boolean isMyMessage(User user, Update update) {
     if (user == null) {
-      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update);
+      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
     }
 
     return getMessageStep().equals(user.getLatestMessage().getMessageStep());
@@ -37,7 +37,7 @@ public abstract class BotMessageHandler {
 
   public User handle(Update update, User user) {
     if (!isNeededMessageType(update)) {
-      throw new TelegramException("Так хватит тут баловаться!", update);
+      throw new TelegramException("Так хватит тут баловаться!", update, true);
     }
 
     try {
@@ -55,7 +55,7 @@ public abstract class BotMessageHandler {
       return user;
     } catch (Exception exception) {
       log.error(String.format("Exception during execute send message for message=%s", getMessageStep()), exception);
-      throw new TelegramException(update, exception);
+      throw new TelegramException(update, exception, false);
     }
   }
 

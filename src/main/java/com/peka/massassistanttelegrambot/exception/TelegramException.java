@@ -14,14 +14,17 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class TelegramException extends RuntimeException {
 
   private final Update update;
+  private final boolean isCustomException;
 
-  public TelegramException(Update update, Exception exception) {
+  public TelegramException(Update update, Exception exception, boolean isCustomException) {
     super(exception);
     this.update = update;
+    this.isCustomException = isCustomException;
   }
 
-  public TelegramException(String message, Update update) {
+  public TelegramException(String message, Update update, boolean isCustomException) {
     super(message);
     this.update = update;
+    this.isCustomException = isCustomException;
   }
 }

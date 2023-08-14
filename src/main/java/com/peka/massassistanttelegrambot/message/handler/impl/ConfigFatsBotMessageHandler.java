@@ -63,7 +63,7 @@ public class ConfigFatsBotMessageHandler extends BotMessageHandler {
       }
       return fats;
     } catch (Exception exception) {
-      throw new TelegramException("Ошибка валидации количества жиров! Повторите еще раз!", update);
+      throw new TelegramException("Ошибка валидации количества жиров! Повторите еще раз!", update, true);
     }
   }
 

@@ -64,7 +64,7 @@ public class CalculateWeightBotMessageHandler extends BotMessageHandler {
 
       return weight;
     } catch (Exception exception) {
-      throw new TelegramException("Ошибка валидации веса! Повторите еще раз!", update);
+      throw new TelegramException("Ошибка валидации веса! Повторите еще раз!", update, true);
     }
   }
 
