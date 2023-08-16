@@ -1,5 +1,6 @@
 package com.peka.massassistanttelegrambot.model;
 
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -59,18 +60,8 @@ public class User {
   @Override
   public String toString() {
     if (isFatPercentageEnabled) {
-      String summary = """
-        %s Твой пол - %s
-        %s Твой возраст - %s
-        %s Твой вес - %s
-        %s Твой рост - %s
-        %s Твоя активность - %s
-        %s Твой процент жира - %s
-        %s Твоя цель - %s
-        """;
-
       return String.format(
-          summary,
+          BotMessagesUtils.USER_WITH_PERCENTAGE_FAT,
           Emoji.MAN_MAGE.getEmoji() + Emoji.WOMAN_MAGE.getEmoji(),
           sex.getValue(),
           Emoji.UNDERAGE.getEmoji(),
@@ -88,17 +79,8 @@ public class User {
       );
     }
 
-    String summary = """
-        %s Твой пол - %s
-        %s Твой возраст - %s
-        %s Твой вес - %s
-        %s Твой рост - %s
-        %s Твоя активность - %s
-        %s Твоя цель - %s
-        """;
-
     return String.format(
-        summary,
+        BotMessagesUtils.USER,
         Emoji.MAN_MAGE.getEmoji() + Emoji.WOMAN_MAGE.getEmoji(),
         sex.getValue(),
         Emoji.UNDERAGE.getEmoji(),

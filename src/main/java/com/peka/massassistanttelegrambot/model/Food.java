@@ -1,6 +1,6 @@
 package com.peka.massassistanttelegrambot.model;
 
-import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.Builder;
 import lombok.Data;
 

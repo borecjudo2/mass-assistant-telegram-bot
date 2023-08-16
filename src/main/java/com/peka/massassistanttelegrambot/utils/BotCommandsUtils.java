@@ -1,6 +1,5 @@
-package com.peka.massassistanttelegrambot.command;
+package com.peka.massassistanttelegrambot.utils;
 
-import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import lombok.experimental.UtilityClass;
 
 /**

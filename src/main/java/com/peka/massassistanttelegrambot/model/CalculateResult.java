@@ -1,5 +1,6 @@
 package com.peka.massassistanttelegrambot.model;
 
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.Builder;
 import lombok.Data;
 
@@ -23,18 +24,8 @@ public class CalculateResult {
 
   @Override
   public String toString() {
-    String text = """
-        Тебе нужно %.1f к. %s
-                
-        Из них:
-                
-        %s Белки - %.1f гр.
-        %s Жиры - %.1f гр.
-        %s Углеводы - %.1f гр.
-        """;
-
     return String.format(
-        text,
+        BotMessagesUtils.CALCULATE_RESULT,
         activityCalories,
         Emoji.FORK.getEmoji(),
         Emoji.MEAT.getEmoji(),

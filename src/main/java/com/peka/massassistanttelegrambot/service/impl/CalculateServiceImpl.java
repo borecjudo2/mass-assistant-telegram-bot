@@ -1,11 +1,11 @@
 package com.peka.massassistanttelegrambot.service.impl;
 
-import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.model.CalculateResult;
 import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.Food;
 import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.service.CalculateService;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -59,17 +59,17 @@ public class CalculateServiceImpl implements CalculateService {
       dayCarbohydrates += food.getCarbohydrates();
     }
 
-    StringBuilder stringBuilder = new StringBuilder(String.format("Твой дневной результат! %s\n\n",
+    StringBuilder stringBuilder = new StringBuilder(String.format(BotMessagesUtils.DAY_RESULT,
         Emoji.TROPHY.getEmoji()));
     CalculateResult calculatedResult = user.getCalculatedResult();
 
-    calculateDayResult("калории",
+    calculateDayResult(BotMessagesUtils.CALORIES,
         Emoji.FORK, calculatedResult.getActivityCalories(), dayCalories, stringBuilder);
-    calculateDayResult("белки",
+    calculateDayResult(BotMessagesUtils.PROTEINS,
         Emoji.MEAT, calculatedResult.getProteins(), dayProteins, stringBuilder);
-    calculateDayResult("жиры",
+    calculateDayResult(BotMessagesUtils.FATS,
         Emoji.NUT, calculatedResult.getFats(), dayFats, stringBuilder);
-    calculateDayResult("углеводы",
+    calculateDayResult(BotMessagesUtils.CARBS,
         Emoji.RAMEN, calculatedResult.getCarbohydrates(), dayCarbohydrates, stringBuilder);
 
     return stringBuilder.toString();
@@ -88,21 +88,21 @@ public class CalculateServiceImpl implements CalculateService {
     double resultValue = calculatedValue - dayValue;
     if (resultValue <= 0) {
       stringBuilder.append(String.format(
-          "Ты закрыл все %s %s %s.\n",
+          BotMessagesUtils.CLOSED_ALL,
           typeCalculate,
           emoji.getEmoji(),
           Emoji.DONE_CHECK.getEmoji())
       );
     } else {
       stringBuilder.append(String.format(
-          "Ты не закрыл все %s %s %s.\n",
+          BotMessagesUtils.NOT_CLOSED_ALL,
           typeCalculate,
           emoji.getEmoji(),
           Emoji.X.getEmoji())
       );
     }
     stringBuilder.append(String.format(
-        " Необходимо %.1f, Дневной результат %.1f, Разница %.1f\n\n",
+        BotMessagesUtils.DAY_RESULT_DETAILS,
         calculatedValue,
         dayValue,
         resultValue

@@ -1,7 +1,7 @@
 package com.peka.massassistanttelegrambot.message.handler.impl;
 
 import com.peka.massassistanttelegrambot.exception.TelegramException;
-import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.CalculateType;
 import com.peka.massassistanttelegrambot.model.CallbackMessages;
@@ -45,7 +45,7 @@ public class CalculateTypeBotMessageHandler extends BotMessageHandler {
   @Override
   protected User fillUserData(Update update, User user) {
     if (!update.hasCallbackQuery()) {
-      throw new TelegramException("Что-то пошло не так", update, true);
+      throw new TelegramException(BotMessagesUtils.SOMETHING_WENT_WRONG, update, true);
     }
 
     CalculateType calculateType = CalculateType.valueOf(update.getCallbackQuery().getData());

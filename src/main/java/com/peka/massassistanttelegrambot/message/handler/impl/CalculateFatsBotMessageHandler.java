@@ -1,12 +1,12 @@
 package com.peka.massassistanttelegrambot.message.handler.impl;
 
 import com.peka.massassistanttelegrambot.exception.TelegramException;
-import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.CalculateType;
 import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -60,7 +60,7 @@ public class CalculateFatsBotMessageHandler extends BotMessageHandler {
 
       return fats;
     } catch (Exception exception) {
-      throw new TelegramException("Ошибка валидации процента жира! Повторите еще раз!", update, true);
+      throw new TelegramException(BotMessagesUtils.ERROR_VALIDATION_FATS_PERCENTAGE, update, true);
     }
   }
 

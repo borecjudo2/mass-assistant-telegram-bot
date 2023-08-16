@@ -1,6 +1,6 @@
 package com.peka.massassistanttelegrambot.message.handler.impl;
 
-import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;

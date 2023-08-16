@@ -4,6 +4,7 @@ import com.peka.massassistanttelegrambot.exception.TelegramException;
 import com.peka.massassistanttelegrambot.model.LatestMessage;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public abstract class BotMessageHandler {
 
   public boolean isMyMessage(User user, Update update) {
     if (user == null) {
-      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
+      throw new TelegramException(BotMessagesUtils.USER_NOT_LOGIN, update, true);
     }
 
     return getMessageStep().equals(user.getLatestMessage().getMessageStep());
@@ -37,7 +38,7 @@ public abstract class BotMessageHandler {
 
   public User handle(Update update, User user) {
     if (!isNeededMessageType(update)) {
-      throw new TelegramException("Так хватит тут баловаться!", update, true);
+      throw new TelegramException(BotMessagesUtils.UNEXPECTED_ERROR, update, true);
     }
 
     try {

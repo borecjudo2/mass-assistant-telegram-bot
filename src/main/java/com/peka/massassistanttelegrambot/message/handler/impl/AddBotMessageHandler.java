@@ -7,6 +7,7 @@ import com.peka.massassistanttelegrambot.model.Food;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.service.CalculateService;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -49,16 +50,16 @@ public class AddBotMessageHandler extends BotMessageHandler {
     Food food = parseData(update);
 
     if (food.getName() == null || food.getName().isBlank()) {
-      throw new TelegramException("Такого значения имени быть не может!", update, true);
+      throw new TelegramException(BotMessagesUtils.ERROR_VALIDATION_FOOD_NAME, update, true);
     }
     if (food.getProteins() < 0) {
-      throw new TelegramException("Такого значения белка быть не может!", update, true);
+      throw new TelegramException(BotMessagesUtils.ERROR_VALIDATION_FOOD_PROTEIN, update, true);
     }
     if (food.getFats() < 0) {
-      throw new TelegramException("Такого значения жиров быть не может!", update, true);
+      throw new TelegramException(BotMessagesUtils.ERROR_VALIDATION_FOOD_FATS, update, true);
     }
     if (food.getCarbohydrates() < 0) {
-      throw new TelegramException("Такого значения углеводов быть не может!", update, true);
+      throw new TelegramException(BotMessagesUtils.ERROR_VALIDATION_FOOD_CARB, update, true);
     }
 
     user.getAteFoodsByDay().add(calculateService.calcylateCaloriesForFood(food));
@@ -76,7 +77,7 @@ public class AddBotMessageHandler extends BotMessageHandler {
           .carbohydrates(Double.parseDouble(values[3]))
           .build();
     } catch (Exception exception) {
-      throw new TelegramException("В неправильном формате отправлено сообщение об еде", update, true);
+      throw new TelegramException(BotMessagesUtils.ERROR_FORMAT_FOOD, update, true);
     }
   }
 
@@ -87,7 +88,7 @@ public class AddBotMessageHandler extends BotMessageHandler {
 
     return SendMessage.builder()
         .chatId(update.getMessage().getChatId())
-        .text("Еда добавлена!\n\n" + food.toString())
+        .text(BotMessagesUtils.EAT_ADDED + food.toString())
         .replyMarkup(createInlineKeyboardMarkup(food))
         .build();
   }

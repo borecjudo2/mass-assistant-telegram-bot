@@ -1,11 +1,11 @@
 package com.peka.massassistanttelegrambot.message.handler.impl;
 
 import com.peka.massassistanttelegrambot.exception.TelegramException;
-import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
 import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.RequiredArgsConstructor;
 import net.iakovlev.timeshape.TimeZoneEngine;
 import org.springframework.stereotype.Service;
@@ -44,14 +44,14 @@ public class ConfigLocationBotMessageHandler extends BotMessageHandler {
   @Override
   protected User fillUserData(Update update, User user) {
     if (!update.getMessage().hasLocation()) {
-      throw new TelegramException("Ты не отправил локацию!(", update, true);
+      throw new TelegramException(BotMessagesUtils.ERROR_LOCATION_NOT_FOUND, update, true);
     }
 
     ZoneId zoneId = timeZoneEngine.query(
             update.getMessage().getLocation().getLatitude(),
             update.getMessage().getLocation().getLongitude()
         )
-        .orElseThrow(() -> new TelegramException("Ты не отправил локацию!(", update, true));
+        .orElseThrow(() -> new TelegramException(BotMessagesUtils.ERROR_LOCATION_NOT_FOUND, update, true));
 
     user.setTimeZone(zoneId.getId());
     return user;

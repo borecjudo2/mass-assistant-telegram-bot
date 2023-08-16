@@ -7,6 +7,7 @@ import com.peka.massassistanttelegrambot.model.ExceptionMessage;
 import com.peka.massassistanttelegrambot.model.Food;
 import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -43,7 +44,7 @@ public class AddFoodFromLikedListMessageHandler implements BotCustomMessageHandl
   public User handleMessage(Update update, User user) {
     try {
       if (user == null) {
-        throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
+        throw new TelegramException(BotMessagesUtils.USER_NOT_LOGIN, update, true);
       }
 
       User existingUser = userRepository.findById(user.getId()).orElseThrow();
@@ -73,7 +74,7 @@ public class AddFoodFromLikedListMessageHandler implements BotCustomMessageHandl
 
     SendMessage sendMessage = SendMessage.builder()
         .chatId(update.getCallbackQuery().getMessage().getChatId())
-        .text("Еда добавлена!\n\n" + food.toString())
+        .text(BotMessagesUtils.EAT_ADDED + food.toString())
         .replyMarkup(createInlineKeyboardMarkup(food))
         .build();
 

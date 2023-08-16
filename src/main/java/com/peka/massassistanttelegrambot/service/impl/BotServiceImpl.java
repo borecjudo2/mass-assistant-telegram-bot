@@ -2,11 +2,12 @@ package com.peka.massassistanttelegrambot.service.impl;
 
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
 import com.peka.massassistanttelegrambot.exception.TelegramException;
-import com.peka.massassistanttelegrambot.message.handler.custom.BotCustomMessageHandler;
 import com.peka.massassistanttelegrambot.message.handler.BotMessageHandler;
+import com.peka.massassistanttelegrambot.message.handler.custom.BotCustomMessageHandler;
 import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;
 import com.peka.massassistanttelegrambot.service.BotService;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -72,7 +73,7 @@ public class BotServiceImpl implements BotService {
 
         SendMessage messageToSend = SendMessage.builder()
             .chatId(chatId)
-            .text("Так, хватит тут баловаться!")
+            .text(BotMessagesUtils.UNEXPECTED_ERROR)
             .build();
         bot.execute(messageToSend);
       } catch (TelegramApiException exception) {

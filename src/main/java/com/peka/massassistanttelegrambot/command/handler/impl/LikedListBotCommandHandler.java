@@ -2,11 +2,12 @@ package com.peka.massassistanttelegrambot.command.handler.impl;
 
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
 import com.peka.massassistanttelegrambot.exception.TelegramException;
-import com.peka.massassistanttelegrambot.message.BotMessagesUtils;
 import com.peka.massassistanttelegrambot.model.CallbackMessages;
 import com.peka.massassistanttelegrambot.model.LatestMessage;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
+import com.peka.massassistanttelegrambot.utils.BotCommands;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -27,17 +28,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LikedListBotCommandHandler extends BotCommandHandler {
 
-  private static final String LIKED_LIST = "/liked_list";
-
   @Override
   protected String getCommandName() {
-    return LIKED_LIST;
+    return BotCommands.LIKED_LIST;
   }
 
   @Override
   protected User fillUserData(Update update, User user) {
     if (user == null) {
-      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
+      throw new TelegramException(BotMessagesUtils.USER_NOT_LOGIN, update, true);
     }
 
     LatestMessage latestMessage = LatestMessage.builder()

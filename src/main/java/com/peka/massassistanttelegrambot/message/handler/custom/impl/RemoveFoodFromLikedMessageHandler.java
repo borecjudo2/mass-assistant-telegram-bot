@@ -7,6 +7,7 @@ import com.peka.massassistanttelegrambot.model.ExceptionMessage;
 import com.peka.massassistanttelegrambot.model.Food;
 import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -42,7 +43,7 @@ public class RemoveFoodFromLikedMessageHandler implements BotCustomMessageHandle
   public User handleMessage(Update update, User user) {
     try {
       if (user == null) {
-        throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
+        throw new TelegramException(BotMessagesUtils.USER_NOT_LOGIN, update, true);
       }
 
       String foodName = update.getCallbackQuery().getData().split(CallbackMessages.CALLBACK_SPLITTER.getData())[1];

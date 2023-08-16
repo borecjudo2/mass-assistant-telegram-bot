@@ -2,6 +2,8 @@ package com.peka.massassistanttelegrambot.command.handler.impl;
 
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
 import com.peka.massassistanttelegrambot.model.User;
+import com.peka.massassistanttelegrambot.utils.BotCommands;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -17,11 +19,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @RequiredArgsConstructor
 public class HelpBotCommandHandler extends BotCommandHandler {
 
-  private static final String HELP = "/help";
-
   @Override
   protected String getCommandName() {
-    return HELP;
+    return BotCommands.HELP;
   }
 
   @Override
@@ -33,15 +33,8 @@ public class HelpBotCommandHandler extends BotCommandHandler {
   protected SendMessage createMessage(Update update, User user) {
     return SendMessage.builder()
         .chatId(update.getMessage().getChatId())
-        .text("Я считаю калории по этой [формуле](https://clck.ru/35AVgL), если выбран дефицит, то от этого значения " +
-            "минус 15%, если поддержка, то так и остается и если профицит, то плюс 15%.\n\n" +
-            "БЖУ считаются так:\n" +
-            "Белки - вес умножить 1.5, по умолчанию. Для настройки тыкни сюда /config\n" +
-            "Жиры - вес умножить 1\n" +
-            "Углеводы - все калории минус калории от белков и жиров\n\n" +
-            "Какие-нибудь вопросы? Пиши моему папе - @borecjudo"
-        )
-        .parseMode("Markdown")
+        .text(BotMessagesUtils.HELP_MESSAGE)
+        .parseMode(BotCommands.MARKDOWN)
         .build();
   }
 }

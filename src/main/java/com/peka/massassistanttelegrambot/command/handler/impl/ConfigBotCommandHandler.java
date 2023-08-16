@@ -1,6 +1,5 @@
 package com.peka.massassistanttelegrambot.command.handler.impl;
 
-import com.peka.massassistanttelegrambot.command.BotCommandsUtils;
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
 import com.peka.massassistanttelegrambot.exception.TelegramException;
 import com.peka.massassistanttelegrambot.model.CallbackMessages;
@@ -8,6 +7,9 @@ import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.LatestMessage;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
+import com.peka.massassistanttelegrambot.utils.BotCommands;
+import com.peka.massassistanttelegrambot.utils.BotCommandsUtils;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -28,17 +30,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConfigBotCommandHandler extends BotCommandHandler {
 
-  private static final String CONFIG = "/config";
-
   @Override
   protected String getCommandName() {
-    return CONFIG;
+    return BotCommands.CONFIG;
   }
 
   @Override
   protected User fillUserData(Update update, User user) {
     if (user == null) {
-      throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
+      throw new TelegramException(BotMessagesUtils.USER_NOT_LOGIN, update, true);
     }
 
     LatestMessage latestMessage = LatestMessage.builder()
@@ -58,7 +58,7 @@ public class ConfigBotCommandHandler extends BotCommandHandler {
         .text(String.format(
             BotCommandsUtils.CONFIG_ALL_COMMAND_TEXT,
             Emoji.FORK.getEmoji(),
-            user.isFatPercentageEnabled() ? "Включено" : "Выключено",
+            user.isFatPercentageEnabled() ? BotMessagesUtils.ENABLED : BotMessagesUtils.DISABLED,
             user.isFatPercentageEnabled() ? Emoji.DONE_CHECK.getEmoji() : Emoji.X.getEmoji(),
             user.getProteinsValue(),
             Emoji.MEAT.getEmoji(),

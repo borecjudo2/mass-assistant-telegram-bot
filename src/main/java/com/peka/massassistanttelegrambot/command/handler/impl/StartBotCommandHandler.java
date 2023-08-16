@@ -1,11 +1,12 @@
 package com.peka.massassistanttelegrambot.command.handler.impl;
 
-import com.peka.massassistanttelegrambot.command.BotCommandsUtils;
 import com.peka.massassistanttelegrambot.command.handler.BotCommandHandler;
 import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.LatestMessage;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
+import com.peka.massassistanttelegrambot.utils.BotCommands;
+import com.peka.massassistanttelegrambot.utils.BotCommandsUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -27,21 +28,9 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class StartBotCommandHandler extends BotCommandHandler {
 
-  private static final String START = "/start";
-  private static final String CALCULATE = "/calculate";
-  private static final String HELP = "/help";
-  private static final String CONFIG = "/config";
-  private static final String LOCATION = "/location";
-  private static final String SCHEDULE = "/schedule";
-  private static final String ADD = "/add";
-  private static final String LIKED_LIST = "/liked_list";
-
-  private static final String CLEAR = "/clear";
-  private static final String RESULT = "/result";
-
   @Override
   protected String getCommandName() {
-    return START;
+    return BotCommands.START;
   }
 
   @Override
@@ -88,43 +77,43 @@ public class StartBotCommandHandler extends BotCommandHandler {
 
   private ReplyKeyboardMarkup createReplyKeyboardMarkup() {
     KeyboardButton startButton = KeyboardButton.builder()
-        .text(START)
+        .text(BotCommands.START)
         .build();
 
     KeyboardButton configButton = KeyboardButton.builder()
-        .text(CONFIG)
+        .text(BotCommands.CONFIG)
         .build();
 
     KeyboardButton locationButton = KeyboardButton.builder()
-        .text(LOCATION)
+        .text(BotCommands.LOCATION)
         .build();
 
     KeyboardButton calculateButton = KeyboardButton.builder()
-        .text(CALCULATE)
+        .text(BotCommands.CALCULATE)
         .build();
 
     KeyboardButton scheduleButton = KeyboardButton.builder()
-        .text(SCHEDULE)
+        .text(BotCommands.SCHEDULE)
         .build();
 
     KeyboardButton addButton = KeyboardButton.builder()
-        .text(ADD)
+        .text(BotCommands.ADD)
         .build();
 
     KeyboardButton likedListButton = KeyboardButton.builder()
-        .text(LIKED_LIST)
+        .text(BotCommands.LIKED_LIST)
         .build();
 
     KeyboardButton clearButton = KeyboardButton.builder()
-        .text(CLEAR)
+        .text(BotCommands.CLEAR)
         .build();
 
     KeyboardButton resultButton = KeyboardButton.builder()
-        .text(RESULT)
+        .text(BotCommands.RESULT)
         .build();
 
     KeyboardButton helpButton = KeyboardButton.builder()
-        .text(HELP)
+        .text(BotCommands.HELP)
         .build();
 
     return ReplyKeyboardMarkup.builder()

@@ -7,6 +7,7 @@ import com.peka.massassistanttelegrambot.model.ExceptionMessage;
 import com.peka.massassistanttelegrambot.model.Food;
 import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;
+import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -31,6 +32,7 @@ import java.util.List;
 public class OpenLikedFoodMessageHandler implements BotCustomMessageHandler {
 
   public static final int MAX_LIKED_FOODS_SIZE = 10;
+
   private final MongodbUserRepository userRepository;
   private final TelegramLongPollingBot bot;
 
@@ -44,12 +46,12 @@ public class OpenLikedFoodMessageHandler implements BotCustomMessageHandler {
   public User handleMessage(Update update, User user) {
     try {
       if (user == null) {
-        throw new TelegramException("Нажми на /start ты не зарегистрирован!", update, true);
+        throw new TelegramException(BotMessagesUtils.USER_NOT_LOGIN, update, true);
       }
 
       User existingUser = userRepository.findById(user.getId()).orElseThrow();
       if (existingUser.getLikedFoods().size() == MAX_LIKED_FOODS_SIZE) {
-        throw new TelegramException("Ты не можешь больше добавить в избранные! Максимум 10 позиций!", update, true);
+        throw new TelegramException(BotMessagesUtils.ERROR_SIZE_LIMIT_LIKED_FOOD, update, true);
       }
 
       String foodName = update.getCallbackQuery().getData().split(CallbackMessages.CALLBACK_SPLITTER.getData())[1];
