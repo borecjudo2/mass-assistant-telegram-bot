@@ -12,98 +12,98 @@ import lombok.experimental.UtilityClass;
 public class BotMessagesUtils {
 
   public String CONFIG_FAT_PERCENTAGE_MESSAGE = """
-      Включить или выключить процент подкожного жира при расчете калорий и БЖУ!
-            
-      Текущее значение - %s %s
+      Ты можешь включить или выключить учет процента подкожного жира при расчете калорий и питательных веществ!
+              
+      Сейчас эта функция %s %s
       """;
 
   public String CONFIG_PROTEINS_MESSAGE = """
-      Изменить значение количества белка на кг массы тела!
-            
-       Текущее значение - %s %s
-       
-       Чтобы изменить значение нужно отправить сообщение!
-       Пример - 2.0
+      Измени количество белка на килограмм массы тела!
+              
+      Текущее значение - %s %s
+          
+      Для изменения значения отправь мне сообщение.
+      Пример: 2.0
       """;
 
   public String CONFIG_FATS_MESSAGE = """
-      Изменить значение количества жиров на кг массы тела!
-            
-       Текущее значение - %s %s
-       
-       Чтобы изменить значение нужно отправить сообщение!
-       Пример - 2.0
+      Измени количество жиров на килограмм массы тела!
+              
+      Текущее значение - %s %s
+          
+      Для изменения значения отправь мне сообщение.
+      Пример: 2.0
       """;
 
   public String CONFIG_LOCATION_MESSAGE = """
-      Новое значение тайм зоны установленно! %s %s
+      Теперь новое значение тайм зоны установлено! %s %s
       """;
 
   public String CALCULATE_SEX_MESSAGE = """
-      Выбери свой пол! %s %s
+      Укажи свой пол: %s %s
       """;
 
   public String CALCULATE_AGE_MESSAGE = """
-      Введи свой возраст! %s
-      Пример: 33
+      Укажи свой возраст: %s
+      Например: 33
       """;
 
   public String CALCULATE_WEIGHT_MESSAGE = """
-      Введи свой вес! %s
-      Пример: 73.5
+      Укажи свой вес: %s
+      Например: 73.5
       """;
 
   public String CALCULATE_HEIGHT_MESSAGE = """
-      Введи свой рост! %s
-      Пример: 183.7
+      Укажи свой рост: %s
+      Например: 183.7
       """;
 
   public String CALCULATE_ACTIVITY_MESSAGE = """
-      Выбери свою активность!
-            
+      Выбери свой уровень активности:
+          
       %s 1,2 - Физическая нагрузка отсутствует или минимальная
-            
-      %s 1,38 - Тренировки средней тяжести 3 раза в неделю
-            
-      %s 1,46 - Тренировки средней тяжести 5 раз в неделю
-            
+          
+      %s 1,38 - Тренировки средней интенсивности 3 раза в неделю
+          
+      %s 1,46 - Тренировки средней интенсивности 5 раз в неделю
+          
       %s 1,55 - Интенсивные тренировки 5 раз в неделю
-            
+          
       %s 1,64 - Тренировки каждый день
-            
+          
       %s 1,73 - Тренировки каждый день или по 2 раза в день
-            
-      %s 1,9 - Ежедневная нагрузка + физическая работа
+          
+      %s 1,9 - Ежедневная интенсивная нагрузка плюс физическая работа
       """;
 
   public String CALCULATE_FATS_MESSAGE = """
-      [Введи свой процент жира!](https://cs10.pikabu.ru/post_img/big/2020/04/07/5/1586243325150517599.png)
+      [Укажи свой процент жира!](https://cs10.pikabu.ru/post_img/big/2020/04/07/5/1586243325150517599.png)
       """;
 
   public String CALCULATE_TYPE_MESSAGE = """
-      Выбери свою цель по подсчету калорий! %s
-      То есть, поддержание текущего веса, уменьшение или увеличение!
+      Выбери свою цель в подсчете калорий: %s
+      То есть, ты хочешь поддерживать текущий вес, снизить его или увеличить!
       """;
 
   public String CALCULATE_RESULT_MESSAGE = """
-      Твои данные! %s
-            
+      Вот твои данные! %s
+          
       %s
       """;
 
   public String ERROR_NO_ATE_FOOD_FOR_DAY_RESULT_TASK = """
-      Ты не заполнил ни одного блюда,
-      я не могу посчитать твои результаты!
-      Чтобы получилось в новом дне нажми на /add
+      Кажется, ты не добавил ни одного продукта.
+      Я не могу рассчитать результаты без данных о питании.
+      Чтобы начать, нажми на /add.
       """;
 
   public String SCHEDULER_ENABLED_MESSAGE = """
-      Ты включил отправку уведомлений о результате твоего питания за день. %s
-      Сообщение приходит в 00:00 %s
+      Ты включил отправку уведомлений о результатах твоего питания за день. %s
+      Ты будешь получать сообщение в 00:00 %s
       """;
 
   public String SCHEDULER_DISABLED_MESSAGE = """
-      Ты выключил отправку уведомлений о результате твоего питания за день. %s
+      Ты выключил отправку уведомлений о результатах твоего питания за день. %s
       """;
 
   public String ADDED_FOOD_MESSAGE = """      
@@ -116,99 +116,102 @@ public class BotMessagesUtils {
       """;
 
   public String CLEANED_FOOD_MESSAGE = """
-      Вся еда удаленна!
+      Все данные о съеденной еде удалены!
       """;
 
   public String LIST_LIKED_FOODS = """
-      Список избранной еды!
+      Вот список избранной еды:
       """;
 
   public String EMPTY_LIKED_FOODS = """
-      Список избранной еды - пуст!
+      Список избранной еды пока пуст!
       """;
 
-  public String USER_NOT_LOGIN = "Нажми на /start ты не зарегистрирован!";
+  public String USER_NOT_LOGIN = "Чтобы начать, нажми /start. Ты ещё не зарегистрирован!";
 
-  public String USER_RESULT_NOT_CALCULATED = "Нажми на /calculate я не знаю твою дневную норму!";
+  public String USER_RESULT_NOT_CALCULATED = "Чтобы узнать свою дневную норму, нажми /calculate!";
 
-  public String USER_LOCATION_NOT_SET = "Нажми на /location я не знаю твою тайм зону!";
+  public String USER_LOCATION_NOT_SET = "Чтобы я знал твою тайм зону, нажми /location!";
 
   public String ENABLED = "Включено";
 
   public String DISABLED = "Выключено";
 
   public String HELP_MESSAGE = """
-      Я считаю калории по этой [формуле](https://clck.ru/35AVgL), если выбран дефицит, то от этого значения
-      минус 15%, если поддержка, то так и остается и если профицит, то плюс 15%.
-      БЖУ считаются так:
-      Белки - вес умножить 1.5, по умолчанию. Для настройки тыкни сюда /config
-      Жиры - вес умножить 1
-      Углеводы - все калории минус калории от белков и жиров
-      Какие-нибудь вопросы? Пиши моему папе - @borecjudo"
+      Я помогу тебе считать калории по этой [формуле](https://clck.ru/35AVgL). Если выбран дефицит, то к этому значению
+      будет вычтено 15%. Если цель - поддерживать вес, то значение останется неизменным. Если цель - набрать вес, то добавится 15%.
+          
+      Расчет БЖУ (белки, жиры, углеводы):
+      - Белки: вес умножается на 1.5 (это значение можно настроить через /config)
+      - Жиры: вес умножается на 1 (это значение можно настроить через /config)
+      - Углеводы: общие калории минус калории от белков и жиров
+          
+      Есть вопросы? Пиши моему создателю - @borecjudo.
       """;
 
-  public String EAT_ADDED = "Еда добавлена!\n\n";
+  public String EAT_ADDED = "Еда успешно добавлена!\n\n";
 
-  public String ERROR_SIZE_LIMIT_LIKED_FOOD = "Ты не можешь больше добавить в избранные! Максимум 10 позиций!";
+  public String ERROR_SIZE_LIMIT_LIKED_FOOD =
+      "К сожалению, ты не можешь добавить больше в избранное. Максимум 10 позиций!";
 
-  public String ERROR_VALIDATION_FOOD_NAME = "Такого значения имени быть не может!";
+  public String ERROR_VALIDATION_FOOD_NAME = "Имя продукта не может иметь такого значения!";
 
-  public String ERROR_VALIDATION_FOOD_PROTEIN = "Такого значения белка быть не может!";
+  public String ERROR_VALIDATION_FOOD_PROTEIN = "Значение белка не может быть таким!";
 
-  public String ERROR_VALIDATION_FOOD_FATS = "Такого значения жиров быть не может!";
+  public String ERROR_VALIDATION_FOOD_FATS = "Значение жиров не может быть таким!";
 
-  public String ERROR_VALIDATION_FOOD_CARB = "Такого значения углеводов быть не может!";
+  public String ERROR_VALIDATION_FOOD_CARB = "Значение углеводов не может быть таким!";
 
-  public String ERROR_FORMAT_FOOD = "В неправильном формате отправлено сообщение об еде";
+  public String ERROR_FORMAT_FOOD = "Сообщение о еде отправлено в неправильном формате.";
 
   public String SOMETHING_WENT_WRONG = "Что-то пошло не так";
 
-  public String ERROR_VALIDATION_AGE = "Ошибка валидации возраста! Повторите еще раз!";
+  public String ERROR_VALIDATION_AGE = "Возникла ошибка при проверке возраста! Пожалуйста, повторите ещё раз.";
 
-  public String ERROR_VALIDATION_FATS_PERCENTAGE = "Ошибка валидации процента жира! Повторите еще раз!";
+  public String ERROR_VALIDATION_FATS_PERCENTAGE = "Возникла ошибка при проверке процента жира! Пожалуйста, повторите ещё раз.";
 
-  public String ERROR_VALIDATION_HEIGHT = "Ошибка валидации роста! Повторите еще раз!";
+  public String ERROR_VALIDATION_HEIGHT = "Возникла ошибка при проверке роста! Пожалуйста, повторите ещё раз.";
 
-  public String ERROR_VALIDATION_WEIGHT = "Ошибка валидации веса! Повторите еще раз!";
+  public String ERROR_VALIDATION_WEIGHT = "Возникла ошибка при проверке веса! Пожалуйста, повторите ещё раз.";
 
-  public String ERROR_VALIDATION_CONFIG_FAT_VALUE = "Ошибка валидации количества жиров! Повторите еще раз!";
+  public String ERROR_VALIDATION_CONFIG_FAT_VALUE = "Возникла ошибка при проверке количества жиров! Пожалуйста, повторите ещё раз.";
 
-  public String ERROR_VALIDATION_CONFIG_PROTEIN_VALUE = "Ошибка валидации количества белка! Повторите еще раз!";
+  public String ERROR_VALIDATION_CONFIG_PROTEIN_VALUE = "Возникла ошибка при проверке количества белка! Пожалуйста, повторите ещё раз.";
 
-  public String ERROR_LOCATION_NOT_FOUND = "Ты не отправил локацию!(";
+  public String ERROR_LOCATION_NOT_FOUND = "Ты не отправил локацию!";
 
-  public String UNEXPECTED_ERROR = "Так, хватит тут баловаться!";
+  public String UNEXPECTED_ERROR = "Что-то пошло не так. Пожалуйста, перестаньте баловаться!";
 
   public String CALCULATE_RESULT = """
-      Тебе нужно %.1f к. %s
-              
+      Тебе нужно %.1f калорий. %s
+          
       Из них:
-              
+          
       %s Белки - %.1f гр.
       %s Жиры - %.1f гр.
       %s Углеводы - %.1f гр.
       """;
 
   public String USER_WITH_PERCENTAGE_FAT = """
-      %s Твой пол - %s
-      %s Твой возраст - %s
-      %s Твой вес - %s
-      %s Твой рост - %s
-      %s Твоя активность - %s
-      %s Твой процент жира - %s
-      %s Твоя цель - %s
+      %s Твой пол: %s
+      %s Твой возраст: %s
+      %s Твой вес: %s
+      %s Твой рост: %s
+      %s Твоя активность: %s
+      %s Твой процент жира: %s
+      %s Твоя цель: %s
       """;
 
   public String USER = """
-      %s Твой пол - %s
-      %s Твой возраст - %s
-      %s Твой вес - %s
-      %s Твой рост - %s
-      %s Твоя активность - %s
-      %s Твоя цель - %s
+      %s Твой пол: %s
+      %s Твой возраст: %s
+      %s Твой вес: %s
+      %s Твой рост: %s
+      %s Твоя активность: %s
+      %s Твоя цель: %s
       """;
 
-  public String DAY_RESULT = "Твой дневной результат! %s\n\n";
+  public String DAY_RESULT = "Вот твои результаты за день! %s\n\n";
 
   public String CALORIES = "калории";
 
@@ -218,9 +221,9 @@ public class BotMessagesUtils {
 
   public String CARBS = "углеводы";
 
-  public String CLOSED_ALL = "Ты закрыл все %s %s %s.\n";
+  public String CLOSED_ALL_FOOD_GAOL = "Ты закрыл все %s %s %s.\n";
 
-  public String NOT_CLOSED_ALL = "Ты не закрыл все %s %s %s.\n";
+  public String NOT_CLOSED_ALL_FOOD_GAOL = "Ты не закрыл все %s %s %s.\n";
 
   public String DAY_RESULT_DETAILS = " Необходимо %.1f, Дневной результат %.1f, Разница %.1f\n\n";
 }

@@ -88,14 +88,14 @@ public class CalculateServiceImpl implements CalculateService {
     double resultValue = calculatedValue - dayValue;
     if (resultValue <= 0) {
       stringBuilder.append(String.format(
-          BotMessagesUtils.CLOSED_ALL,
+          BotMessagesUtils.CLOSED_ALL_FOOD_GAOL,
           typeCalculate,
           emoji.getEmoji(),
           Emoji.DONE_CHECK.getEmoji())
       );
     } else {
       stringBuilder.append(String.format(
-          BotMessagesUtils.NOT_CLOSED_ALL,
+          BotMessagesUtils.NOT_CLOSED_ALL_FOOD_GAOL,
           typeCalculate,
           emoji.getEmoji(),
           Emoji.X.getEmoji())

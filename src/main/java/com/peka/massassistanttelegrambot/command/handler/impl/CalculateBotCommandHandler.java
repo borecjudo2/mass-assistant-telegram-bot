@@ -61,7 +61,7 @@ public class CalculateBotCommandHandler extends BotCommandHandler {
       return SendMessage.builder()
           .chatId(update.getMessage().getChatId())
           .text(String.format(
-              BotCommandsUtils.CALCULATE_COMMAND_TEXT,
+              BotMessagesUtils.CALCULATE_SEX_MESSAGE,
               Emoji.MAN_MAGE.getEmoji(),
               Emoji.WOMAN_MAGE.getEmoji()
           ))
