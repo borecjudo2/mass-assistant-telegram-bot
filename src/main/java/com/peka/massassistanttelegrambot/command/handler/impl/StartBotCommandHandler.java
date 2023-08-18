@@ -11,11 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -71,65 +67,6 @@ public class StartBotCommandHandler extends BotCommandHandler {
                 Emoji.SPAGHETTI.getEmoji()
             )
         )
-        .replyMarkup(createReplyKeyboardMarkup())
-        .build();
-  }
-
-  private ReplyKeyboardMarkup createReplyKeyboardMarkup() {
-    KeyboardButton startButton = KeyboardButton.builder()
-        .text(BotCommands.START)
-        .build();
-
-    KeyboardButton configButton = KeyboardButton.builder()
-        .text(BotCommands.CONFIG)
-        .build();
-
-    KeyboardButton locationButton = KeyboardButton.builder()
-        .text(BotCommands.LOCATION)
-        .build();
-
-    KeyboardButton calculateButton = KeyboardButton.builder()
-        .text(BotCommands.CALCULATE)
-        .build();
-
-    KeyboardButton scheduleButton = KeyboardButton.builder()
-        .text(BotCommands.SCHEDULE)
-        .build();
-
-    KeyboardButton addButton = KeyboardButton.builder()
-        .text(BotCommands.ADD)
-        .build();
-
-    KeyboardButton likedListButton = KeyboardButton.builder()
-        .text(BotCommands.LIKED_LIST)
-        .build();
-
-    KeyboardButton clearButton = KeyboardButton.builder()
-        .text(BotCommands.CLEAR)
-        .build();
-
-    KeyboardButton resultButton = KeyboardButton.builder()
-        .text(BotCommands.RESULT)
-        .build();
-
-    KeyboardButton helpButton = KeyboardButton.builder()
-        .text(BotCommands.HELP)
-        .build();
-
-    return ReplyKeyboardMarkup.builder()
-        .resizeKeyboard(true)
-        .keyboard(Arrays.asList(
-            new KeyboardRow(Collections.singletonList(startButton)),
-            new KeyboardRow(Collections.singletonList(configButton)),
-            new KeyboardRow(Collections.singletonList(locationButton)),
-            new KeyboardRow(Collections.singletonList(calculateButton)),
-            new KeyboardRow(Collections.singletonList(scheduleButton)),
-            new KeyboardRow(Collections.singletonList(addButton)),
-            new KeyboardRow(Collections.singletonList(likedListButton)),
-            new KeyboardRow(Collections.singletonList(clearButton)),
-            new KeyboardRow(Collections.singletonList(resultButton)),
-            new KeyboardRow(Collections.singletonList(helpButton))
-        ))
         .build();
   }
 }
