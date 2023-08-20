@@ -178,7 +178,13 @@ public class BotMessagesUtils {
 
   public String ERROR_VALIDATION_CONFIG_PROTEIN_VALUE = "Возникла ошибка при проверке количества белка! Пожалуйста, повторите ещё раз.";
 
-  public String ERROR_LOCATION_NOT_FOUND = "Ты не отправил локацию!";
+  public String ERROR_VALIDATION_LOCATION = """
+      Возникла ошибка при проверке локации!
+      Локация не найдена!
+      Пожалуйста, повторите ещё раз!
+      """;
+
+  public String ERROR_LOCATION_NOT_SEND = "Ты не отправил локацию!";
 
   public String UNEXPECTED_ERROR = "Что-то пошло не так. Пожалуйста, перестаньте баловаться!";
 
