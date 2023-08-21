@@ -17,7 +17,7 @@ public class TelegramException extends RuntimeException {
   private final boolean isCustomException;
 
   public TelegramException(Update update, Exception exception, boolean isCustomException) {
-    super(exception);
+    super(exception.getLocalizedMessage());
     this.update = update;
     this.isCustomException = isCustomException;
   }

@@ -43,18 +43,33 @@ public class ConfigLocationBotMessageHandler extends BotMessageHandler {
 
   @Override
   protected User fillUserData(Update update, User user) {
-    if (!update.getMessage().hasLocation()) {
-      throw new TelegramException(BotMessagesUtils.ERROR_LOCATION_NOT_FOUND, update, true);
+    if (update.hasMessage() && update.getMessage().hasLocation()) {
+      ZoneId zoneId = timeZoneEngine.query(
+              update.getMessage().getLocation().getLatitude(),
+              update.getMessage().getLocation().getLongitude()
+          )
+          .orElseThrow(() -> new TelegramException(BotMessagesUtils.ERROR_VALIDATION_LOCATION, update, true));
+
+      user.setTimeZone(zoneId.getId());
+      return user;
     }
 
-    ZoneId zoneId = timeZoneEngine.query(
-            update.getMessage().getLocation().getLatitude(),
-            update.getMessage().getLocation().getLongitude()
-        )
-        .orElseThrow(() -> new TelegramException(BotMessagesUtils.ERROR_LOCATION_NOT_FOUND, update, true));
+    if (update.hasMessage() && update.getMessage().hasText()) {
+      ZoneId zoneId = validateZoneIdByTextMessage(update);
 
-    user.setTimeZone(zoneId.getId());
-    return user;
+      user.setTimeZone(zoneId.getId());
+      return user;
+    }
+
+    throw new TelegramException(BotMessagesUtils.ERROR_LOCATION_NOT_SEND, update, true);
+  }
+
+  private ZoneId validateZoneIdByTextMessage(Update update) {
+    try {
+      return ZoneId.of(update.getMessage().getText());
+    } catch (Exception e) {
+      throw new TelegramException(BotMessagesUtils.ERROR_VALIDATION_LOCATION, update, true);
+    }
   }
 
   @Override

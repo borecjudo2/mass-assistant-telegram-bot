@@ -28,7 +28,7 @@ public class TelegramExceptionHandler {
         exception.getUpdate().getMessage().getChatId() :
         exception.getUpdate().getCallbackQuery().getMessage().getChatId();
 
-    StringBuilder stringBuilder = new StringBuilder("Упс! Ты меня сломал! ");
+    StringBuilder stringBuilder = new StringBuilder("Упс! Ты меня сломал!\n");
     if (exception.isCustomException()) {
       stringBuilder.append(exception.getLocalizedMessage());
     }

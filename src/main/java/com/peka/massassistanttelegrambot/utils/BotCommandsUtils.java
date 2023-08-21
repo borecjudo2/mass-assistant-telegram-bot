@@ -44,6 +44,10 @@ public class BotCommandsUtils {
               
       P.S. Обещаю сохранить только часовой пояс (например, Europe/London).
       Мне не интересно, где именно ты живешь!)
+            
+      Или ты можешь отправить сообщение которое содержит твою локацию.
+      Пример:
+      Europe/London
       """;
 
   public String SCHEDULER_COMMAND_TEXT = """
