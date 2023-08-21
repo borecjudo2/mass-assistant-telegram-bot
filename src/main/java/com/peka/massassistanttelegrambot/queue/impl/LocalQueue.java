@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.lang.ref.SoftReference;
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -21,12 +23,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 @RequiredArgsConstructor
 public class LocalQueue implements BotQueue {
 
-  private final BlockingQueue<Update> updateQueue = new LinkedBlockingQueue<>(100);
+  private final SoftReference<BlockingQueue<Update>> queueSoftReference =
+      new SoftReference<>(new LinkedBlockingQueue<>(100));
 
   @Override
   public void putUpdate(Update update) {
     try {
-      updateQueue.put(update);
+      BlockingQueue<Update> queue = queueSoftReference.get();
+      Objects.requireNonNull(queue).put(update);
     } catch (InterruptedException exception) {
       throw new RuntimeException(exception);
     }
@@ -35,7 +39,8 @@ public class LocalQueue implements BotQueue {
   @Override
   public Update takeUpdate() {
     try {
-      return updateQueue.take();
+      BlockingQueue<Update> queue = queueSoftReference.get();
+      return Objects.requireNonNull(queue).take();
     } catch (InterruptedException exception) {
       throw new RuntimeException("Exception when receiving an update from the queue", exception);
     }
