@@ -22,6 +22,7 @@
     <telegrambots.version>6.7.0</telegrambots.version>
     <emoji.version>5.1.1</emoji.version>
     <timeshape.version>2022g.17</timeshape.version>
+    <rxjava.version>3.1.6</rxjava.version>
 
     <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
     <checkstyle.version>10.0</checkstyle.version>
@@ -30,6 +31,11 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>io.reactivex.rxjava3</groupId>
+        <artifactId>rxjava</artifactId>
+        <version>${rxjava.version}</version>
+      </dependency>
       <dependency>
         <groupId>net.iakovlev</groupId>
         <artifactId>timeshape</artifactId>
@@ -49,6 +55,10 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>io.reactivex.rxjava3</groupId>
+      <artifactId>rxjava</artifactId>
+    </dependency>
     <dependency>
       <groupId>net.iakovlev</groupId>
       <artifactId>timeshape</artifactId>
