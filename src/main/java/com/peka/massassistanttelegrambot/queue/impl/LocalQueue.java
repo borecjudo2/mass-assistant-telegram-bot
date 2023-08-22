@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.lang.ref.SoftReference;
-import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -23,16 +22,24 @@ import java.util.concurrent.LinkedBlockingQueue;
 @RequiredArgsConstructor
 public class LocalQueue implements BotQueue {
 
-  private final SoftReference<BlockingQueue<Update>> queueSoftReference =
-      new SoftReference<>(new LinkedBlockingQueue<>(100));
+  private static final int QUEUE_CAPACITY = 1000;
+
+  private SoftReference<BlockingQueue<Update>> queueSoftReference =
+      new SoftReference<>(new LinkedBlockingQueue<>(QUEUE_CAPACITY));
 
   @Override
   public void putUpdate(Update update) {
     try {
       BlockingQueue<Update> queue = queueSoftReference.get();
-      Objects.requireNonNull(queue).put(update);
+
+      if (queue == null) {
+        createNewSoftQueue();
+        putUpdate(update);
+      } else {
+        queue.put(update);
+      }
     } catch (InterruptedException exception) {
-      throw new RuntimeException(exception);
+      throw new RuntimeException("Exception when putting an update to the queue", exception);
     }
   }
 
@@ -40,9 +47,19 @@ public class LocalQueue implements BotQueue {
   public Update takeUpdate() {
     try {
       BlockingQueue<Update> queue = queueSoftReference.get();
-      return Objects.requireNonNull(queue).take();
+
+      if (queue == null) {
+        createNewSoftQueue();
+        return takeUpdate();
+      } else {
+        return queue.take();
+      }
     } catch (InterruptedException exception) {
       throw new RuntimeException("Exception when receiving an update from the queue", exception);
     }
+  }
+
+  private void createNewSoftQueue() {
+    queueSoftReference = new SoftReference<>(new LinkedBlockingQueue<>(QUEUE_CAPACITY));
   }
 }
