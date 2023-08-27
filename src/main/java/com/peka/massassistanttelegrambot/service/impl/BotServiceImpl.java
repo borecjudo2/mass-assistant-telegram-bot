@@ -46,14 +46,6 @@ public class BotServiceImpl implements BotService {
         .filter(botCommandHandler -> botCommandHandler.isMyCommand(update))
         .findFirst()
         .ifPresentOrElse(botCommandHandler -> saveUser(botCommandHandler.handle(update, existingUser)),
-            handleMessages(existingUser, update));
-  }
-
-  private Runnable handleMessages(User existingUser, Update update) {
-    return () -> botMessageHandlers.stream()
-        .filter(botMessageHandler -> botMessageHandler.isMyMessage(existingUser, update))
-        .findFirst()
-        .ifPresentOrElse(botMessageHandler -> saveUser(botMessageHandler.handle(update, existingUser)),
             handleCustomMessages(existingUser, update));
   }
 
@@ -62,7 +54,15 @@ public class BotServiceImpl implements BotService {
         .filter(botMessageHandler -> botMessageHandler.isMyMessage(update, existingUser))
         .findFirst()
         .ifPresentOrElse(botMessageHandler ->
-            saveUser(botMessageHandler.handleMessage(update, existingUser)), handleOtherMessages(update));
+            saveUser(botMessageHandler.handleMessage(update, existingUser)), handleMessages(existingUser, update));
+  }
+
+  private Runnable handleMessages(User existingUser, Update update) {
+    return () -> botMessageHandlers.stream()
+        .filter(botMessageHandler -> botMessageHandler.isMyMessage(existingUser, update))
+        .findFirst()
+        .ifPresentOrElse(botMessageHandler -> saveUser(botMessageHandler.handle(update, existingUser)),
+            handleOtherMessages(update));
   }
 
   private Runnable handleOtherMessages(Update update) {

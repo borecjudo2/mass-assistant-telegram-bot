@@ -3,11 +3,14 @@ package com.peka.massassistanttelegrambot.local.init;
 import com.peka.massassistanttelegrambot.model.CalculateResult;
 import com.peka.massassistanttelegrambot.model.CalculateType;
 import com.peka.massassistanttelegrambot.model.Food;
+import com.peka.massassistanttelegrambot.model.LatestMessage;
+import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.Sex;
 import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,7 @@ import java.util.Set;
  */
 @Service
 @Profile("local")
+@Slf4j
 @RequiredArgsConstructor
 public class LocalDbMigration {
 
@@ -29,8 +33,15 @@ public class LocalDbMigration {
 
   @PostConstruct
   public void init() {
-    User user = User.builder()
-        .id(460797262L)
+    User user = createUser(460797262L);
+    userRepository.save(user);
+
+    log.info("Local users have been saved");
+  }
+
+  private User createUser(Long id) {
+    return User.builder()
+        .id(id)
         .username("borecjudo")
         .age(33)
         .weight(90)
@@ -44,6 +55,10 @@ public class LocalDbMigration {
         .timeZone("Europe/Minsk")
         .calculateType(CalculateType.PROFIT)
         .isResultTaskEnabled(true)
+        .latestMessage(LatestMessage.builder()
+            .chatId(460797262L)
+            .messageStep(MessageStep.START)
+            .build())
         .calculatedResult(CalculateResult.builder()
             .activityCalories(3000)
             .proteins(150)
@@ -94,7 +109,7 @@ public class LocalDbMigration {
                 .proteins(16)
                 .fats(14)
                 .carbohydrates(100)
-                .build(),   Food.builder()
+                .build(), Food.builder()
                 .name("Expanenta3")
                 .calories(100)
                 .proteins(30)
@@ -107,7 +122,7 @@ public class LocalDbMigration {
                 .proteins(16)
                 .fats(14)
                 .carbohydrates(100)
-                .build(),   Food.builder()
+                .build(), Food.builder()
                 .name("Expanenta4")
                 .calories(100)
                 .proteins(30)
@@ -120,7 +135,7 @@ public class LocalDbMigration {
                 .proteins(16)
                 .fats(14)
                 .carbohydrates(100)
-                .build(),   Food.builder()
+                .build(), Food.builder()
                 .name("Expanenta5")
                 .calories(100)
                 .proteins(30)
@@ -129,7 +144,5 @@ public class LocalDbMigration {
                 .build()
         ))
         .build();
-
-    userRepository.save(user);
   }
 }

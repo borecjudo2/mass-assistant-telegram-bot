@@ -31,5 +31,6 @@ public enum MessageStep {
   CONFIG_DAY_RESULT_TASK,
   ADD_FOOD,
   CLEAR_FOOD,
+  CLEAR_FOOD_SCHEDULED,
   LIKED_LIST
 }

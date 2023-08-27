@@ -52,6 +52,9 @@ public class AddBotMessageHandler extends BotMessageHandler {
     if (food.getName() == null || food.getName().isBlank()) {
       throw new TelegramException(BotMessagesUtils.ERROR_VALIDATION_FOOD_NAME, update, true);
     }
+    if (food.getName().length() > 30) {
+      throw new TelegramException(BotMessagesUtils.ERROR_VALIDATION_FOOD_NAME_SIZE, update, true);
+    }
     if (food.getProteins() < 0) {
       throw new TelegramException(BotMessagesUtils.ERROR_VALIDATION_FOOD_PROTEIN, update, true);
     }

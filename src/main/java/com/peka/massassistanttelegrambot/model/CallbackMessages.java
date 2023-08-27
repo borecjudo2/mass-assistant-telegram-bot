@@ -29,7 +29,8 @@ public enum CallbackMessages {
   FOOD_REMOVE_FROM_LIKED("Удалить из избранных " + Emoji.RED_HEART.getEmoji()),
   ADD_TO_EATEN_FOOD("Добавить в съеденное за день " + Emoji.FORK.getEmoji()),
   OPEN_FOOD_DETAILS(""),
-  CLEAR_FOOD("Да");
+  CLEAR_FOOD("Да"),
+  CLEAR_FOOD_SCHEDULED("Да");
 
   private final String data;
 }

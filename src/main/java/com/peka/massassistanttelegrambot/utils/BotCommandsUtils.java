@@ -74,4 +74,9 @@ public class BotCommandsUtils {
   public String CLEAR_FOOD_COMMAND_TEXT = """
       Ты уверен, что хочешь удалить всю информацию о съеденной еде? %s
       """;
+
+  public String SCHEDULED_CLEAR_FOOD_COMMAND_TEXT = """
+      Каждодневное уведомление об очистке списка еды!
+      Хочешь удалить всю информацию о съеденной еде? %s
+      """;
 }

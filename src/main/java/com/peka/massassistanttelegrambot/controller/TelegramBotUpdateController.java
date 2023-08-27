@@ -60,7 +60,6 @@ public class TelegramBotUpdateController {
 
   @PreDestroy
   public void destroy() {
-    log.info("Destroying");
     disposable.dispose();
   }
 }
