@@ -156,6 +156,8 @@ public class BotMessagesUtils {
 
   public String ERROR_VALIDATION_FOOD_NAME = "Имя продукта не может иметь такого значения!";
 
+  public String ERROR_VALIDATION_FOOD_NAME_SIZE = "Имя продукта не может быть больше, чем 30 символов!";
+
   public String ERROR_VALIDATION_FOOD_PROTEIN = "Значение белка не может быть таким!";
 
   public String ERROR_VALIDATION_FOOD_FATS = "Значение жиров не может быть таким!";
