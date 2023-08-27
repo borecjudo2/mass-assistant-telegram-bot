@@ -13,10 +13,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import org.telegram.telegrambots.meta.updateshandlers.SentCallback;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -79,24 +82,42 @@ public class DayCleanerFood {
     log.info("Started sending scheduled clear food messages for users");
 
     disposable = rxUserRepo.findAll()
+        .doOnNext(value -> log.info(String.format("%s", Thread.currentThread().getName() + Thread.currentThread().getId())))
         .subscribeOn(Schedulers.computation())
+        .observeOn(Schedulers.computation())
         .subscribe(this::sendMessageToUser);
   }
 
   private void sendMessageToUser(User user) {
     try {
       SendMessage messageToSend = createMessage(user);
-      Message executedMessage = bot.execute(messageToSend);
+      bot.executeAsync(messageToSend, new SentCallback<>() {
+        @Override
+        public void onResult(BotApiMethod<Message> method, Message response) {
+          // Do something with the response, if needed
+        }
 
-      if (user.getLatestMessage() != null) {
-        user.getLatestMessage().setMessageId(executedMessage.getMessageId());
-      }
+        @Override
+        public void onError(BotApiMethod<Message> method, TelegramApiRequestException exception) {
+          log.error(
+              String.format("Exception during send scheduled clear food message for user with id=%s", user.getId()),
+              exception
+          );
+        }
 
-      rxUserRepo.save(user)
-          .subscribe(result -> log.info(String.format("User with id=%s saved", result.getId())));
+        @Override
+        public void onException(BotApiMethod<Message> method, Exception exception) {
+          log.error(
+              String.format("Exception during send scheduled clear food message for user with id=%s", user.getId()),
+              exception
+          );
+        }
+      });
     } catch (Exception exception) {
-      log.error(String.format("Exception during send scheduled clear food message for user with id=%s", user.getId()),
-          exception);
+      log.error(
+          String.format("Exception during send scheduled clear food message for user with id=%s", user.getId()),
+          exception
+      );
     }
   }
 
