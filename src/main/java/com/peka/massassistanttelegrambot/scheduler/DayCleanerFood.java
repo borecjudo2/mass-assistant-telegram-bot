@@ -5,8 +5,11 @@ import com.peka.massassistanttelegrambot.model.Emoji;
 import com.peka.massassistanttelegrambot.model.LatestMessage;
 import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
-import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;
+import com.peka.massassistanttelegrambot.repo.RxMongodbUserRepository;
 import com.peka.massassistanttelegrambot.utils.BotCommandsUtils;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +45,10 @@ public class DayCleanerFood {
   private static final int DAY_PERIOD_IN_MINUTES = 24 * 60;
 
   private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-  private final MongodbUserRepository userRepository;
+  private final RxMongodbUserRepository rxUserRepo;
   private final TelegramLongPollingBot bot;
+
+  private Disposable disposable;
 
   @PostConstruct
   public void init() {
@@ -61,46 +66,56 @@ public class DayCleanerFood {
 
     scheduler.scheduleAtFixedRate(
         this::sendClearFoodMessageToUsers,
-        initialDelay.toMinutes(),
-        DAY_PERIOD_IN_MINUTES,
-        TimeUnit.MINUTES
+        0,
+        30,
+        TimeUnit.SECONDS
     );
+
+    //    scheduler.scheduleAtFixedRate(
+    //        this::sendClearFoodMessageToUsers,
+    //        initialDelay.toMinutes(),
+    //        DAY_PERIOD_IN_MINUTES,
+    //        TimeUnit.MINUTES
+    //    );
   }
 
   @PreDestroy
   public void destroy() {
+    disposable.dispose();
     scheduler.shutdown();
   }
 
   private void sendClearFoodMessageToUsers() {
     log.info("Started sending scheduled clear food messages for users");
-    userRepository.findAll().forEach(this::sendMessageToUser);
-    log.info("Finished sending scheduled clear food messages for users");
+
+    Observable<User> observable = Observable.create(emitter -> rxUserRepo.findAll()
+        .subscribe(
+            emitter::onNext,
+            emitter::onError,
+            emitter::onComplete
+        ));
+
+    disposable = observable
+        .subscribeOn(Schedulers.io())
+        .observeOn(Schedulers.computation())
+        .subscribe(this::sendMessageToUser);
   }
 
   private void sendMessageToUser(User user) {
     try {
-      User updatedUser = updateUserCurrentLatestMessage(user);
-      SendMessage messageToSend = createMessage(updatedUser);
+      SendMessage messageToSend = createMessage(user);
       Message executedMessage = bot.execute(messageToSend);
 
-      user.getLatestMessage().setMessageId(executedMessage.getMessageId());
-      userRepository.save(user);
+      if (user.getLatestMessage() != null) {
+        user.getLatestMessage().setMessageId(executedMessage.getMessageId());
+      }
+
+      rxUserRepo.save(user)
+          .subscribe(result -> log.info(String.format("User with id=%s saved", result.getId())));
     } catch (Exception exception) {
       log.error(String.format("Exception during send scheduled clear food message for user with id=%s", user.getId()),
           exception);
     }
-  }
-
-  private User updateUserCurrentLatestMessage(User user) {
-    LatestMessage latestMessage = LatestMessage.builder()
-        .chatId(user.getId())
-        .messageStep(MessageStep.CLEAR_FOOD)
-        .build();
-
-    user.setLatestMessage(latestMessage);
-
-    return user;
   }
 
   private SendMessage createMessage(User user) {
@@ -116,8 +131,8 @@ public class DayCleanerFood {
 
   private InlineKeyboardMarkup createInlineKeyboardMarkup() {
     InlineKeyboardButton yesButton = InlineKeyboardButton.builder()
-        .text(CallbackMessages.CLEAR_FOOD.getData())
-        .callbackData(CallbackMessages.CLEAR_FOOD.toString())
+        .text(CallbackMessages.CLEAR_FOOD_SCHEDULED.getData())
+        .callbackData(CallbackMessages.CLEAR_FOOD_SCHEDULED.toString())
         .build();
 
     return InlineKeyboardMarkup.builder()

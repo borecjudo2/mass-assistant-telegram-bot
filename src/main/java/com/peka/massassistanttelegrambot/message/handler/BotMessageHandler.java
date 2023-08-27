@@ -44,11 +44,11 @@ public abstract class BotMessageHandler {
     try {
       user = fillUserData(update, user);
 
-      DeleteMessage messageToDelete = createDeleteMessage(user);
-      bot.execute(messageToDelete);
-
       SendMessage messageToSend = createNextMessage(update, user);
       Message executedMessage = bot.execute(messageToSend);
+
+      DeleteMessage messageToDelete = createDeleteMessage(user);
+      bot.execute(messageToDelete);
 
       user.getLatestMessage().setMessageId(executedMessage.getMessageId());
       user.getLatestMessage().setMessageStep(getNextMessageStep(user));

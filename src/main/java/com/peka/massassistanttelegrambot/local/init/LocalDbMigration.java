@@ -3,6 +3,8 @@ package com.peka.massassistanttelegrambot.local.init;
 import com.peka.massassistanttelegrambot.model.CalculateResult;
 import com.peka.massassistanttelegrambot.model.CalculateType;
 import com.peka.massassistanttelegrambot.model.Food;
+import com.peka.massassistanttelegrambot.model.LatestMessage;
+import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.Sex;
 import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;
@@ -44,6 +46,10 @@ public class LocalDbMigration {
         .timeZone("Europe/Minsk")
         .calculateType(CalculateType.PROFIT)
         .isResultTaskEnabled(true)
+        .latestMessage(LatestMessage.builder()
+            .chatId(460797262L)
+            .messageStep(MessageStep.START)
+            .build())
         .calculatedResult(CalculateResult.builder()
             .activityCalories(3000)
             .proteins(150)
@@ -94,7 +100,7 @@ public class LocalDbMigration {
                 .proteins(16)
                 .fats(14)
                 .carbohydrates(100)
-                .build(),   Food.builder()
+                .build(), Food.builder()
                 .name("Expanenta3")
                 .calories(100)
                 .proteins(30)
@@ -107,7 +113,7 @@ public class LocalDbMigration {
                 .proteins(16)
                 .fats(14)
                 .carbohydrates(100)
-                .build(),   Food.builder()
+                .build(), Food.builder()
                 .name("Expanenta4")
                 .calories(100)
                 .proteins(30)
@@ -120,7 +126,7 @@ public class LocalDbMigration {
                 .proteins(16)
                 .fats(14)
                 .carbohydrates(100)
-                .build(),   Food.builder()
+                .build(), Food.builder()
                 .name("Expanenta5")
                 .calories(100)
                 .proteins(30)
