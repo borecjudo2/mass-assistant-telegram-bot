@@ -10,6 +10,7 @@ import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import java.util.Set;
  */
 @Service
 @Profile("local")
+@Slf4j
 @RequiredArgsConstructor
 public class LocalDbMigration {
 
@@ -31,8 +33,15 @@ public class LocalDbMigration {
 
   @PostConstruct
   public void init() {
-    User user = User.builder()
-        .id(460797262L)
+    User user = createUser(460797262L);
+    userRepository.save(user);
+
+    log.info("Local users have been saved");
+  }
+
+  private User createUser(Long id) {
+    return User.builder()
+        .id(id)
         .username("borecjudo")
         .age(33)
         .weight(90)
@@ -135,7 +144,5 @@ public class LocalDbMigration {
                 .build()
         ))
         .build();
-
-    userRepository.save(user);
   }
 }

@@ -2,12 +2,9 @@ package com.peka.massassistanttelegrambot.scheduler;
 
 import com.peka.massassistanttelegrambot.model.CallbackMessages;
 import com.peka.massassistanttelegrambot.model.Emoji;
-import com.peka.massassistanttelegrambot.model.LatestMessage;
-import com.peka.massassistanttelegrambot.model.MessageStep;
 import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.repo.RxMongodbUserRepository;
 import com.peka.massassistanttelegrambot.utils.BotCommandsUtils;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import jakarta.annotation.PostConstruct;
@@ -66,17 +63,10 @@ public class DayCleanerFood {
 
     scheduler.scheduleAtFixedRate(
         this::sendClearFoodMessageToUsers,
-        0,
-        30,
-        TimeUnit.SECONDS
+        initialDelay.toMinutes(),
+        DAY_PERIOD_IN_MINUTES,
+        TimeUnit.MINUTES
     );
-
-    //    scheduler.scheduleAtFixedRate(
-    //        this::sendClearFoodMessageToUsers,
-    //        initialDelay.toMinutes(),
-    //        DAY_PERIOD_IN_MINUTES,
-    //        TimeUnit.MINUTES
-    //    );
   }
 
   @PreDestroy
@@ -88,16 +78,8 @@ public class DayCleanerFood {
   private void sendClearFoodMessageToUsers() {
     log.info("Started sending scheduled clear food messages for users");
 
-    Observable<User> observable = Observable.create(emitter -> rxUserRepo.findAll()
-        .subscribe(
-            emitter::onNext,
-            emitter::onError,
-            emitter::onComplete
-        ));
-
-    disposable = observable
-        .subscribeOn(Schedulers.io())
-        .observeOn(Schedulers.computation())
+    disposable = rxUserRepo.findAll()
+        .subscribeOn(Schedulers.computation())
         .subscribe(this::sendMessageToUser);
   }
 
