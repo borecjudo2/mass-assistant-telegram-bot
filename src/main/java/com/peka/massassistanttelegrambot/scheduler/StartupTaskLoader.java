@@ -5,6 +5,7 @@ import com.peka.massassistanttelegrambot.repo.MongodbUserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.concurrent.Executors;
  * @version 1.0.0
  */
 @Service
+@ConditionalOnProperty(name = "service.location.enabled", havingValue = "true")
 @Slf4j
 @RequiredArgsConstructor
 public class StartupTaskLoader {

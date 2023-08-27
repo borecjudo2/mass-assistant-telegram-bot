@@ -6,6 +6,7 @@ import com.peka.massassistanttelegrambot.scheduler.DayResultTimerTask;
 import com.peka.massassistanttelegrambot.service.CalculateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 
@@ -24,6 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @version 1.0.0
  */
 @Service
+@ConditionalOnProperty(name = "service.location.enabled", havingValue = "true")
 @Slf4j
 @RequiredArgsConstructor
 public class DayResultSchedulerServiceImpl implements DayResultSchedulerService {

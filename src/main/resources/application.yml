@@ -9,3 +9,7 @@ management:
 google:
   app:
     url: https://github.com/
+
+service:
+  location:
+    enabled: false

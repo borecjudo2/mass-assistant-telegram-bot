@@ -8,6 +8,7 @@ import com.peka.massassistanttelegrambot.model.User;
 import com.peka.massassistanttelegrambot.utils.BotMessagesUtils;
 import lombok.RequiredArgsConstructor;
 import net.iakovlev.timeshape.TimeZoneEngine;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -21,6 +22,7 @@ import java.time.ZoneId;
  * @version 1.0.0
  */
 @Service
+@ConditionalOnProperty(name = "service.location.enabled", havingValue = "true")
 @RequiredArgsConstructor
 public class ConfigLocationBotMessageHandler extends BotMessageHandler {
 
